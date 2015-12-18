@@ -5,6 +5,15 @@
         "label": "Sheet 1"
     },
     {
+        "id": "2acbd3e8.812b5c",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "iap.c8rqb14cuaul.us-east-1.rds.amazonaws.com",
+        "port": "3306",
+        "db": "iap",
+        "tz": ""
+    },
+    {
         "id": "77182b8a.32db3c",
         "type": "http in",
         "z": "2667e117.0ef57e",
@@ -12,33 +21,22 @@
         "url": "/update",
         "method": "post",
         "swaggerDoc": "",
-        "x": 158,
-        "y": 134,
+        "x": 78.5,
+        "y": 142,
         "wires": [
             [
-                "74e003be.bf6344"
+                "74e003be.bf6344",
+                "39dd5d91.012faa"
             ]
         ]
-    },
-    {
-        "id": "9109f3b4.2a38d8",
-        "type": "debug",
-        "z": "2667e117.0ef57e",
-        "name": "console.log",
-        "active": true,
-        "console": "false",
-        "complete": "payload",
-        "x": 681,
-        "y": 293,
-        "wires": []
     },
     {
         "id": "74e003be.bf6344",
         "type": "http response",
         "z": "2667e117.0ef57e",
         "name": "RESP: 200 OK",
-        "x": 318,
-        "y": 69,
+        "x": 294,
+        "y": 128,
         "wires": []
     },
     {
@@ -47,13 +45,13 @@
         "z": "2667e117.0ef57e",
         "name": "Mensaje Prueba",
         "topic": "Telegram message",
-        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731, \"text\": \"HOLAAAAA\" } }",
+        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731 , \"text\": \"/start\", \"location\": 123} }",
         "payloadType": "string",
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 98,
-        "y": 266,
+        "x": 107,
+        "y": 432,
         "wires": [
             [
                 "39dd5d91.012faa"
@@ -65,8 +63,8 @@
         "type": "json",
         "z": "2667e117.0ef57e",
         "name": "msg TO json",
-        "x": 284,
-        "y": 261,
+        "x": 130,
+        "y": 271,
         "wires": [
             [
                 "990d1be3.d2ab08"
@@ -78,15 +76,100 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Procesar Mensaje",
-        "func": "var newMsg = { payload: msg.payload.message.text };\nreturn newMsg;\n",
-        "outputs": 1,
+        "func": "var update = msg.payload.message;\nif(update.text){\n    var mensaje = update.text;\n    var output = {payload: mensaje};\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
+        "outputs": "3",
         "noerr": 0,
-        "x": 458,
-        "y": 222,
+        "x": 347,
+        "y": 268,
         "wires": [
             [
-                "9109f3b4.2a38d8"
+                "8c57380c.138dc",
+                "425d6f3.bbc9c1"
+            ],
+            [
+                "44e9bfb9.ec4218"
+            ],
+            [
+                "45c2424c.4fc5ec"
             ]
+        ]
+    },
+    {
+        "id": "44e9bfb9.ec4218",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 587,
+        "y": 284,
+        "wires": []
+    },
+    {
+        "id": "45c2424c.4fc5ec",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 421,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8c57380c.138dc",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 433,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "425d6f3.bbc9c1",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "Procesar Comandos",
+        "property": "payload",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "/start"
+            },
+            {
+                "t": "eq",
+                "v": "/cancelar"
+            },
+            {
+                "t": "eq",
+                "v": "/registro"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 3,
+        "x": 657,
+        "y": 216,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9c2b9f8.bae0b6",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "2acbd3e8.812b5c",
+        "name": "",
+        "x": 929,
+        "y": 294,
+        "wires": [
+            []
         ]
     }
 ]
