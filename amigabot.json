@@ -12,11 +12,12 @@
         "url": "/update",
         "method": "post",
         "swaggerDoc": "",
-        "x": 158,
-        "y": 134,
+        "x": 103.5,
+        "y": 132,
         "wires": [
             [
-                "9109f3b4.2a38d8"
+                "74e003be.bf6344",
+                "39dd5d91.012faa"
             ]
         ]
     },
@@ -28,8 +29,65 @@
         "active": true,
         "console": "false",
         "complete": "payload",
-        "x": 357,
-        "y": 265,
+        "x": 726,
+        "y": 90,
         "wires": []
+    },
+    {
+        "id": "74e003be.bf6344",
+        "type": "http response",
+        "z": "2667e117.0ef57e",
+        "name": "RESP: 200 OK",
+        "x": 282,
+        "y": 66,
+        "wires": []
+    },
+    {
+        "id": "17553984.fad286",
+        "type": "inject",
+        "z": "2667e117.0ef57e",
+        "name": "Mensaje Prueba",
+        "topic": "Telegram message",
+        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731, \"text\": \"HOLAAAAA\" } }",
+        "payloadType": "string",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 101,
+        "y": 167,
+        "wires": [
+            [
+                "39dd5d91.012faa"
+            ]
+        ]
+    },
+    {
+        "id": "39dd5d91.012faa",
+        "type": "json",
+        "z": "2667e117.0ef57e",
+        "name": "msg TO json",
+        "x": 328,
+        "y": 151,
+        "wires": [
+            [
+                "990d1be3.d2ab08"
+            ]
+        ]
+    },
+    {
+        "id": "990d1be3.d2ab08",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Procesar Mensaje",
+        "func": "var newMsg = { payload: msg.payload.message.text };\nreturn newMsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 544,
+        "y": 164,
+        "wires": [
+            [
+                "9109f3b4.2a38d8"
+            ]
+        ]
     }
 ]

@@ -1,37 +1,92 @@
 [
-  {
-    "type": "tab",
-    "id": "2667e117.0ef57e",
-    "label": "Sheet 1"
-  },
-  {
-    "id": "808a78cf.26a1a8",
-    "type": "http request",
-    "z": "2667e117.0ef57e",
-    "name": "",
-    "method": "GET",
-    "ret": "txt",
-    "url": "",
-    "x": 161,
-    "y": 167,
-    "wires": [
-      [
-        "66005643.0a69f8"
-      ]
-    ]
-  },
-  {
-    "id": "66005643.0a69f8",
-    "type": "function",
-    "z": "2667e117.0ef57e",
-    "name": "",
-    "func": "\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 535,
-    "y": 130,
-    "wires": [
-      []
-    ]
-  }
+    {
+        "type": "tab",
+        "id": "2667e117.0ef57e",
+        "label": "Sheet 1"
+    },
+    {
+        "id": "77182b8a.32db3c",
+        "type": "http in",
+        "z": "2667e117.0ef57e",
+        "name": "Nuevo Mensaje",
+        "url": "/update",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 158,
+        "y": 134,
+        "wires": [
+            [
+                "74e003be.bf6344"
+            ]
+        ]
+    },
+    {
+        "id": "9109f3b4.2a38d8",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "console.log",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 681,
+        "y": 293,
+        "wires": []
+    },
+    {
+        "id": "74e003be.bf6344",
+        "type": "http response",
+        "z": "2667e117.0ef57e",
+        "name": "RESP: 200 OK",
+        "x": 318,
+        "y": 69,
+        "wires": []
+    },
+    {
+        "id": "17553984.fad286",
+        "type": "inject",
+        "z": "2667e117.0ef57e",
+        "name": "Mensaje Prueba",
+        "topic": "Telegram message",
+        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731, \"text\": \"HOLAAAAA\" } }",
+        "payloadType": "string",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 98,
+        "y": 266,
+        "wires": [
+            [
+                "39dd5d91.012faa"
+            ]
+        ]
+    },
+    {
+        "id": "39dd5d91.012faa",
+        "type": "json",
+        "z": "2667e117.0ef57e",
+        "name": "msg TO json",
+        "x": 284,
+        "y": 261,
+        "wires": [
+            [
+                "990d1be3.d2ab08"
+            ]
+        ]
+    },
+    {
+        "id": "990d1be3.d2ab08",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Procesar Mensaje",
+        "func": "var newMsg = { payload: msg.payload.message.text };\nreturn newMsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 458,
+        "y": 222,
+        "wires": [
+            [
+                "9109f3b4.2a38d8"
+            ]
+        ]
+    }
 ]
