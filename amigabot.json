@@ -1,37 +1,35 @@
 [
-  {
-    "type": "tab",
-    "id": "2667e117.0ef57e",
-    "label": "Sheet 1"
-  },
-  {
-    "id": "808a78cf.26a1a8",
-    "type": "http request",
-    "z": "2667e117.0ef57e",
-    "name": "",
-    "method": "GET",
-    "ret": "txt",
-    "url": "",
-    "x": 161,
-    "y": 167,
-    "wires": [
-      [
-        "66005643.0a69f8"
-      ]
-    ]
-  },
-  {
-    "id": "66005643.0a69f8",
-    "type": "function",
-    "z": "2667e117.0ef57e",
-    "name": "",
-    "func": "\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 535,
-    "y": 130,
-    "wires": [
-      []
-    ]
-  }
+    {
+        "type": "tab",
+        "id": "2667e117.0ef57e",
+        "label": "Sheet 1"
+    },
+    {
+        "id": "77182b8a.32db3c",
+        "type": "http in",
+        "z": "2667e117.0ef57e",
+        "name": "Nuevo Mensaje",
+        "url": "/update",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 158,
+        "y": 134,
+        "wires": [
+            [
+                "9109f3b4.2a38d8"
+            ]
+        ]
+    },
+    {
+        "id": "9109f3b4.2a38d8",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "console.log",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 357,
+        "y": 265,
+        "wires": []
+    }
 ]
