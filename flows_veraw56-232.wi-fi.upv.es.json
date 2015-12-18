@@ -1,0 +1,37 @@
+[
+  {
+    "type": "tab",
+    "id": "2667e117.0ef57e",
+    "label": "Sheet 1"
+  },
+  {
+    "id": "808a78cf.26a1a8",
+    "type": "http request",
+    "z": "2667e117.0ef57e",
+    "name": "",
+    "method": "GET",
+    "ret": "txt",
+    "url": "",
+    "x": 161,
+    "y": 167,
+    "wires": [
+      [
+        "66005643.0a69f8"
+      ]
+    ]
+  },
+  {
+    "id": "66005643.0a69f8",
+    "type": "function",
+    "z": "2667e117.0ef57e",
+    "name": "",
+    "func": "\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 535,
+    "y": 130,
+    "wires": [
+      []
+    ]
+  }
+]

@@ -374,6 +374,69 @@
      "file": "/Users/alejandro/node_modules/node-red-node-mysql/68-mysql.js"
     }
    }
+  },
+  "node-red-node-google": {
+   "name": "node-red-node-google",
+   "version": "0.1.0",
+   "nodes": {
+    "google calendar": {
+     "name": "google calendar",
+     "types": [
+      "google calendar in",
+      "google calendar",
+      "google calendar out"
+     ],
+     "enabled": true,
+     "module": "node-red-node-google",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/calendar.js"
+    },
+    "google directions": {
+     "name": "google directions",
+     "types": [
+      "google directions"
+     ],
+     "enabled": true,
+     "module": "node-red-node-google",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/directions.js"
+    },
+    "google geocoding": {
+     "name": "google geocoding",
+     "types": [
+      "google geocoding"
+     ],
+     "enabled": true,
+     "module": "node-red-node-google",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/geocoding.js"
+    },
+    "google places": {
+     "name": "google places",
+     "types": [
+      "google places"
+     ],
+     "enabled": true,
+     "module": "node-red-node-google",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/places.js"
+    },
+    "google plus": {
+     "name": "google plus",
+     "types": [
+      "google plus"
+     ],
+     "enabled": true,
+     "module": "node-red-node-google",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/plus.js"
+    },
+    "google-api-config": {
+     "name": "google-api-config",
+     "types": [
+      "google-credentials",
+      "google-api-config"
+     ],
+     "enabled": true,
+     "module": "node-red-node-google",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/google.js"
+    }
+   }
   }
  }
 }
