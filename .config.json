@@ -2,7 +2,7 @@
  "nodes": {
   "node-red": {
    "name": "node-red",
-   "version": "0.12.4",
+   "version": "0.12.4-git",
    "nodes": {
     "sentiment": {
      "name": "sentiment",
@@ -11,7 +11,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/analysis/72-sentiment.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/analysis/72-sentiment.js"
     },
     "inject": {
      "name": "inject",
@@ -20,7 +20,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/20-inject.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/20-inject.js"
     },
     "catch": {
      "name": "catch",
@@ -29,7 +29,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/25-catch.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/25-catch.js"
     },
     "status": {
      "name": "status",
@@ -38,7 +38,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/25-status.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/25-status.js"
     },
     "debug": {
      "name": "debug",
@@ -47,7 +47,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/58-debug.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/58-debug.js"
     },
     "exec": {
      "name": "exec",
@@ -56,7 +56,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/75-exec.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/75-exec.js"
     },
     "function": {
      "name": "function",
@@ -65,7 +65,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/80-function.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/80-function.js"
     },
     "template": {
      "name": "template",
@@ -74,7 +74,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/80-template.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/80-template.js"
     },
     "delay": {
      "name": "delay",
@@ -83,7 +83,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/89-delay.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/89-delay.js"
     },
     "trigger": {
      "name": "trigger",
@@ -92,7 +92,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/89-trigger.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/89-trigger.js"
     },
     "comment": {
      "name": "comment",
@@ -101,7 +101,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/90-comment.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/90-comment.js"
     },
     "unknown": {
      "name": "unknown",
@@ -110,7 +110,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/core/98-unknown.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/core/98-unknown.js"
     },
     "rpi-gpio": {
      "name": "rpi-gpio",
@@ -121,7 +121,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/hardware/36-rpi-gpio.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/hardware/36-rpi-gpio.js"
     },
     "mqtt": {
      "name": "mqtt",
@@ -132,7 +132,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/10-mqtt.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/10-mqtt.js"
     },
     "httpin": {
      "name": "httpin",
@@ -142,7 +142,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/21-httpin.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/21-httpin.js"
     },
     "httprequest": {
      "name": "httprequest",
@@ -151,7 +151,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/21-httprequest.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/21-httprequest.js"
     },
     "websocket": {
      "name": "websocket",
@@ -163,7 +163,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/22-websocket.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/22-websocket.js"
     },
     "watch": {
      "name": "watch",
@@ -172,7 +172,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/23-watch.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/23-watch.js"
     },
     "tcpin": {
      "name": "tcpin",
@@ -183,7 +183,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/31-tcpin.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/31-tcpin.js"
     },
     "udp": {
      "name": "udp",
@@ -193,7 +193,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/io/32-udp.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/io/32-udp.js"
     },
     "switch": {
      "name": "switch",
@@ -202,7 +202,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/logic/10-switch.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/logic/10-switch.js"
     },
     "change": {
      "name": "change",
@@ -211,7 +211,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/logic/15-change.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/logic/15-change.js"
     },
     "range": {
      "name": "range",
@@ -220,7 +220,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/logic/16-range.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/logic/16-range.js"
     },
     "CSV": {
      "name": "CSV",
@@ -229,7 +229,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/parsers/70-CSV.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/parsers/70-CSV.js"
     },
     "HTML": {
      "name": "HTML",
@@ -238,7 +238,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/parsers/70-HTML.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/parsers/70-HTML.js"
     },
     "JSON": {
      "name": "JSON",
@@ -247,7 +247,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/parsers/70-JSON.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/parsers/70-JSON.js"
     },
     "XML": {
      "name": "XML",
@@ -256,7 +256,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/parsers/70-XML.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/parsers/70-XML.js"
     },
     "tail": {
      "name": "tail",
@@ -265,7 +265,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/storage/28-tail.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/storage/28-tail.js"
     },
     "file": {
      "name": "file",
@@ -275,7 +275,7 @@
      ],
      "enabled": true,
      "module": "node-red",
-     "file": "/usr/local/lib/node_modules/node-red/nodes/core/storage/50-file.js"
+     "file": "/Users/alejandro/work/amigaBOT/nodes/core/storage/50-file.js"
     }
    }
   },
@@ -291,7 +291,7 @@
      ],
      "enabled": true,
      "module": "node-red-node-email",
-     "file": "/usr/local/lib/node_modules/node-red/node_modules/node-red-node-email/61-email.js"
+     "file": "/Users/alejandro/node_modules/node-red-node-email/61-email.js"
     }
    }
   },
@@ -306,7 +306,7 @@
      ],
      "enabled": true,
      "module": "node-red-node-feedparser",
-     "file": "/usr/local/lib/node_modules/node-red/node_modules/node-red-node-feedparser/32-feedparse.js"
+     "file": "/Users/alejandro/node_modules/node-red-node-feedparser/32-feedparse.js"
     }
    }
   },
@@ -321,7 +321,24 @@
      ],
      "enabled": true,
      "module": "node-red-node-rbe",
-     "file": "/usr/local/lib/node_modules/node-red/node_modules/node-red-node-rbe/rbe.js"
+     "file": "/Users/alejandro/node_modules/node-red-node-rbe/rbe.js"
+    }
+   }
+  },
+  "node-red-node-serialport": {
+   "name": "node-red-node-serialport",
+   "version": "0.1.0",
+   "nodes": {
+    "serialport": {
+     "name": "serialport",
+     "types": [
+      "serial in",
+      "serial out",
+      "serial-port"
+     ],
+     "enabled": true,
+     "module": "node-red-node-serialport",
+     "file": "/Users/alejandro/node_modules/node-red-node-serialport/25-serial.js"
     }
    }
   },
@@ -338,7 +355,7 @@
      ],
      "enabled": true,
      "module": "node-red-node-twitter",
-     "file": "/usr/local/lib/node_modules/node-red/node_modules/node-red-node-twitter/27-twitter.js"
+     "file": "/Users/alejandro/node_modules/node-red-node-twitter/27-twitter.js"
     }
    }
   },
@@ -354,101 +371,7 @@
      ],
      "enabled": true,
      "module": "node-red-node-mysql",
-     "file": "/usr/local/lib/node_modules/node-red-node-mysql/68-mysql.js"
-    }
-   }
-  },
-  "node-red-node-google": {
-   "name": "node-red-node-google",
-   "version": "0.1.0",
-   "nodes": {
-    "google calendar": {
-     "name": "google calendar",
-     "types": [
-      "google calendar in",
-      "google calendar",
-      "google calendar out"
-     ],
-     "enabled": true,
-     "module": "node-red-node-google",
-     "file": "/usr/local/lib/node_modules/node-red-node-google/calendar.js"
-    },
-    "google directions": {
-     "name": "google directions",
-     "types": [
-      "google directions"
-     ],
-     "enabled": true,
-     "module": "node-red-node-google",
-     "file": "/usr/local/lib/node_modules/node-red-node-google/directions.js"
-    },
-    "google geocoding": {
-     "name": "google geocoding",
-     "types": [
-      "google geocoding"
-     ],
-     "enabled": true,
-     "module": "node-red-node-google",
-     "file": "/usr/local/lib/node_modules/node-red-node-google/geocoding.js"
-    },
-    "google places": {
-     "name": "google places",
-     "types": [
-      "google places"
-     ],
-     "enabled": true,
-     "module": "node-red-node-google",
-     "file": "/usr/local/lib/node_modules/node-red-node-google/places.js"
-    },
-    "google plus": {
-     "name": "google plus",
-     "types": [
-      "google plus"
-     ],
-     "enabled": true,
-     "module": "node-red-node-google",
-     "file": "/usr/local/lib/node_modules/node-red-node-google/plus.js"
-    },
-    "google-api-config": {
-     "name": "google-api-config",
-     "types": [
-      "google-credentials",
-      "google-api-config"
-     ],
-     "enabled": true,
-     "module": "node-red-node-google",
-     "file": "/usr/local/lib/node_modules/node-red-node-google/google.js"
-    }
-   }
-  },
-  "node-red-node-swagger": {
-   "name": "node-red-node-swagger",
-   "version": "0.1.5",
-   "nodes": {
-    "swagger": {
-     "name": "swagger",
-     "types": [
-      "swagger-doc"
-     ],
-     "enabled": true,
-     "module": "node-red-node-swagger",
-     "file": "/usr/local/lib/node_modules/node-red-node-swagger/swagger/swagger.js"
-    }
-   }
-  },
-  "node-red-node-twilio": {
-   "name": "node-red-node-twilio",
-   "version": "0.0.8",
-   "nodes": {
-    "twilio": {
-     "name": "twilio",
-     "types": [
-      "twilio out",
-      "twilio-api"
-     ],
-     "enabled": true,
-     "module": "node-red-node-twilio",
-     "file": "/usr/local/lib/node_modules/node-red-node-twilio/56-twilio.js"
+     "file": "/Users/alejandro/node_modules/node-red-node-mysql/68-mysql.js"
     }
    }
   }
