@@ -67,7 +67,8 @@
         "y": 271,
         "wires": [
             [
-                "990d1be3.d2ab08"
+                "990d1be3.d2ab08",
+                "bdeb3dbd.e23938"
             ]
         ]
     },
@@ -166,10 +167,26 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 929,
-        "y": 294,
+        "x": 600,
+        "y": 479,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "bdeb3dbd.e23938",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Comprobar Etapa",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 378,
+        "y": 462,
+        "wires": [
+            [
+                "9c2b9f8.bae0b6"
+            ]
         ]
     }
 ]

@@ -63,12 +63,11 @@
         "type": "json",
         "z": "2667e117.0ef57e",
         "name": "msg TO json",
-        "x": 130,
-        "y": 271,
+        "x": 101,
+        "y": 275,
         "wires": [
             [
-                "990d1be3.d2ab08",
-                "bdeb3dbd.e23938"
+                "ff66613c.bcd648"
             ]
         ]
     },
@@ -80,8 +79,8 @@
         "func": "var update = msg.payload.message;\nif(update.text){\n    var mensaje = update.text;\n    var output = {payload: mensaje};\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "3",
         "noerr": 0,
-        "x": 347,
-        "y": 268,
+        "x": 463,
+        "y": 270,
         "wires": [
             [
                 "8c57380c.138dc",
@@ -103,8 +102,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 587,
-        "y": 284,
+        "x": 710,
+        "y": 285,
         "wires": []
     },
     {
@@ -115,8 +114,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 421,
-        "y": 360,
+        "x": 539,
+        "y": 350,
         "wires": []
     },
     {
@@ -127,8 +126,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 433,
-        "y": 180,
+        "x": 582,
+        "y": 153,
         "wires": []
     },
     {
@@ -186,6 +185,36 @@
         "wires": [
             [
                 "9c2b9f8.bae0b6"
+            ]
+        ]
+    },
+    {
+        "id": "23347428.eb53fc",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "2acbd3e8.812b5c",
+        "name": "getUsuario",
+        "x": 284,
+        "y": 358,
+        "wires": [
+            [
+                "990d1be3.d2ab08"
+            ]
+        ]
+    },
+    {
+        "id": "ff66613c.bcd648",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Buscar Usuario",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 265,
+        "y": 201,
+        "wires": [
+            [
+                "23347428.eb53fc"
             ]
         ]
     }
