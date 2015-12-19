@@ -50,8 +50,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 107,
-        "y": 432,
+        "x": 80.5,
+        "y": 178,
         "wires": [
             [
                 "39dd5d91.012faa"
@@ -63,8 +63,8 @@
         "type": "json",
         "z": "2667e117.0ef57e",
         "name": "msg TO json",
-        "x": 101,
-        "y": 275,
+        "x": 300,
+        "y": 168,
         "wires": [
             [
                 "ff66613c.bcd648"
@@ -79,8 +79,8 @@
         "func": "var update = msg.payload.message;\nif(update.text){\n    var mensaje = update.text;\n    var output = {payload: mensaje};\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "3",
         "noerr": 0,
-        "x": 463,
-        "y": 270,
+        "x": 508,
+        "y": 253,
         "wires": [
             [
                 "8c57380c.138dc",
@@ -102,8 +102,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 710,
-        "y": 285,
+        "x": 765,
+        "y": 347,
         "wires": []
     },
     {
@@ -114,8 +114,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 539,
-        "y": 350,
+        "x": 767,
+        "y": 383,
         "wires": []
     },
     {
@@ -126,8 +126,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 582,
-        "y": 153,
+        "x": 766,
+        "y": 311,
         "wires": []
     },
     {
@@ -152,8 +152,8 @@
         ],
         "checkall": "false",
         "outputs": 3,
-        "x": 657,
-        "y": 216,
+        "x": 749,
+        "y": 217,
         "wires": [
             [],
             [],
@@ -166,10 +166,12 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 600,
-        "y": 479,
+        "x": 342,
+        "y": 253,
         "wires": [
-            []
+            [
+                "990d1be3.d2ab08"
+            ]
         ]
     },
     {
@@ -180,8 +182,8 @@
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 378,
-        "y": 462,
+        "x": 287,
+        "y": 385,
         "wires": [
             [
                 "9c2b9f8.bae0b6"
@@ -194,11 +196,11 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "getUsuario",
-        "x": 284,
-        "y": 358,
+        "x": 98,
+        "y": 385,
         "wires": [
             [
-                "990d1be3.d2ab08"
+                "bdeb3dbd.e23938"
             ]
         ]
     },
@@ -210,8 +212,8 @@
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 265,
-        "y": 201,
+        "x": 131,
+        "y": 303,
         "wires": [
             [
                 "23347428.eb53fc"
