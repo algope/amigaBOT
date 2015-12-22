@@ -58,6 +58,7 @@
     "node-red-node-google": "^0.1.0",
     "node-red-node-mysql": "0.0.7",
     "node-red-node-rbe": "0.1.*",
+    "node-red-node-twilio": "0.0.8",
     "node-red-node-twitter": "0.1.*",
     "nopt": "3.0.6",
     "oauth2orize": "1.2.0",

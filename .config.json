@@ -437,6 +437,22 @@
      "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-google/google.js"
     }
    }
+  },
+  "node-red-node-twilio": {
+   "name": "node-red-node-twilio",
+   "version": "0.0.8",
+   "nodes": {
+    "twilio": {
+     "name": "twilio",
+     "types": [
+      "twilio out",
+      "twilio-api"
+     ],
+     "enabled": true,
+     "module": "node-red-node-twilio",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-twilio/56-twilio.js"
+    }
+   }
   }
  }
 }
