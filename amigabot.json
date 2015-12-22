@@ -26,7 +26,7 @@
         "wires": [
             [
                 "74e003be.bf6344",
-                "39dd5d91.012faa"
+                "8736ea0.7f5b198"
             ]
         ]
     },
@@ -50,8 +50,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 114.64291381835938,
-        "y": 674.2857055664062,
+        "x": 145.64291381835938,
+        "y": 695.2857055664062,
         "wires": [
             [
                 "39dd5d91.012faa"
@@ -63,8 +63,8 @@
         "type": "json",
         "z": "2667e117.0ef57e",
         "name": "msg TO json",
-        "x": 117.42855834960938,
-        "y": 483.7142639160156,
+        "x": 123.42855834960938,
+        "y": 598.7142333984375,
         "wires": [
             [
                 "8736ea0.7f5b198"
@@ -79,8 +79,8 @@
         "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "3",
         "noerr": 0,
-        "x": 1321.857177734375,
-        "y": 424.7142639160156,
+        "x": 1108.857177734375,
+        "y": 395.7142639160156,
         "wires": [
             [
                 "425d6f3.bbc9c1"
@@ -111,8 +111,8 @@
         ],
         "checkall": "false",
         "outputs": 3,
-        "x": 1545.857177734375,
-        "y": 379.7142639160156,
+        "x": 1333.857177734375,
+        "y": 333.7142639160156,
         "wires": [
             [
                 "1fff98b8.ef58b7"
@@ -127,8 +127,8 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 427.0000915527344,
-        "y": 483.7142639160156,
+        "x": 246.0001220703125,
+        "y": 449.7142333984375,
         "wires": [
             [
                 "2cfc4b83.be2644"
@@ -143,8 +143,8 @@
         "func": "var query = \"SELECT id, stage, first_name, last_name, username FROM iap.users WHERE id=\"+msg.payload.message.from.id;\nvar output = {payload: msg.payload, mensaje:msg.payload.message, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 281.5714416503906,
-        "y": 483.7142639160156,
+        "x": 104.57144165039062,
+        "y": 449.7142333984375,
         "wires": [
             [
                 "a0a2262.775ced8"
@@ -167,8 +167,8 @@
         ],
         "checkall": "false",
         "outputs": 2,
-        "x": 668.857177734375,
-        "y": 483.7142639160156,
+        "x": 488.857177734375,
+        "y": 449.7142333984375,
         "wires": [
             [
                 "57cb5abc.0da214"
@@ -186,8 +186,8 @@
         "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 834.857177734375,
-        "y": 435.7142639160156,
+        "x": 642.857177734375,
+        "y": 405.7142639160156,
         "wires": [
             [
                 "aaca03e8.66d258"
@@ -200,8 +200,8 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 973.857177734375,
-        "y": 435.7142639160156,
+        "x": 787.857177734375,
+        "y": 405.7142639160156,
         "wires": [
             [
                 "1e13b1d4.2bf726"
@@ -216,8 +216,8 @@
         "func": "var results = msg.payload;\nvar output=null;\nvar estado = 0;\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n    \n}\n//payload: msg.payload,\nvar res = { mensaje: msg.mensaje, stage:estado, queryRes: output }\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 550.71435546875,
-        "y": 483.7142639160156,
+        "x": 365.71435546875,
+        "y": 449.7142333984375,
         "wires": [
             [
                 "26be8463.db5a64"
@@ -246,8 +246,8 @@
         ],
         "checkall": "false",
         "outputs": 3,
-        "x": 1127.1744384765625,
-        "y": 490.396728515625,
+        "x": 932.1744384765625,
+        "y": 456.396728515625,
         "wires": [
             [
                 "990d1be3.d2ab08"
@@ -264,8 +264,8 @@
         "method": "POST",
         "ret": "txt",
         "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
-        "x": 2099.7779541015625,
-        "y": 388.77777099609375,
+        "x": 1662.7779541015625,
+        "y": 301.77777099609375,
         "wires": [
             [
                 "9d9cadd5.09623"
@@ -280,8 +280,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\n\nmsg.payload = { chat_id: id, text: 'Hola, '+nombre }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1780,
-        "y": 343.3333333333333,
+        "x": 1519,
+        "y": 302.3333435058594,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -296,8 +296,8 @@
         "active": true,
         "console": "false",
         "complete": "true",
-        "x": 2382.222222222222,
-        "y": 455.55555555555554,
+        "x": 1792.22216796875,
+        "y": 301.5555419921875,
         "wires": []
     }
 ]

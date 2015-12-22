@@ -295,7 +295,7 @@
         "name": "",
         "active": true,
         "console": "false",
-        "complete": "false",
+        "complete": "true",
         "x": 2382.222222222222,
         "y": 455.55555555555554,
         "wires": []
