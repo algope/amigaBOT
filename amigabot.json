@@ -21,8 +21,8 @@
         "url": "/update",
         "method": "post",
         "swaggerDoc": "",
-        "x": 99.5,
-        "y": 142,
+        "x": 96.9285888671875,
+        "y": 298.28570556640625,
         "wires": [
             [
                 "74e003be.bf6344",
@@ -35,8 +35,8 @@
         "type": "http response",
         "z": "2667e117.0ef57e",
         "name": "RESP: 200 OK",
-        "x": 315,
-        "y": 128,
+        "x": 317.5714416503906,
+        "y": 324.1428527832031,
         "wires": []
     },
     {
@@ -50,8 +50,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 101.5,
-        "y": 178,
+        "x": 114.64291381835938,
+        "y": 674.2857055664062,
         "wires": [
             [
                 "39dd5d91.012faa"
@@ -63,8 +63,8 @@
         "type": "json",
         "z": "2667e117.0ef57e",
         "name": "msg TO json",
-        "x": 321,
-        "y": 168,
+        "x": 117.42855834960938,
+        "y": 483.7142639160156,
         "wires": [
             [
                 "8736ea0.7f5b198"
@@ -79,8 +79,8 @@
         "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {payload: mensaje};\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "3",
         "noerr": 0,
-        "x": 673,
-        "y": 432,
+        "x": 1321.857177734375,
+        "y": 424.7142639160156,
         "wires": [
             [
                 "425d6f3.bbc9c1"
@@ -111,8 +111,8 @@
         ],
         "checkall": "false",
         "outputs": 3,
-        "x": 926,
-        "y": 342,
+        "x": 1545.857177734375,
+        "y": 379.7142639160156,
         "wires": [
             [],
             [],
@@ -125,8 +125,8 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 287,
-        "y": 278,
+        "x": 427.0000915527344,
+        "y": 483.7142639160156,
         "wires": [
             [
                 "2cfc4b83.be2644"
@@ -137,12 +137,12 @@
         "id": "8736ea0.7f5b198",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Obtener Usuario",
-        "func": "var query = \"SELECT id FROM iap.users WHERE id=\"+msg.payload.message.from.id;\nvar output = {payload: msg.payload, mensaje:msg.payload.message, topic: query};\nreturn output;",
+        "name": "BuscaUsuario",
+        "func": "var query = \"SELECT id, stage, first_name, last_name, username FROM iap.users WHERE id=\"+msg.payload.message.from.id;\nvar output = {payload: msg.payload, mensaje:msg.payload.message, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 123,
-        "y": 278,
+        "x": 281.5714416503906,
+        "y": 483.7142639160156,
         "wires": [
             [
                 "a0a2262.775ced8"
@@ -165,13 +165,15 @@
         ],
         "checkall": "false",
         "outputs": 2,
-        "x": 111,
-        "y": 426,
+        "x": 668.857177734375,
+        "y": 483.7142639160156,
         "wires": [
             [
                 "57cb5abc.0da214"
             ],
-            []
+            [
+                "1e13b1d4.2bf726"
+            ]
         ]
     },
     {
@@ -179,11 +181,11 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Crear Usuario",
-        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\n\nvar query = \"INSERT INTO iap.users (id,first_name, last_name)\"+ \n            \" VALUES(\"+id+\",'\"+nombre+\"','\"+apellido+\"');\";\nvar output = {payload: msg.payload, mensaje:msg.mensaje, topic: query};\nreturn output;",
+        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 313,
-        "y": 394,
+        "x": 834.857177734375,
+        "y": 435.7142639160156,
         "wires": [
             [
                 "aaca03e8.66d258"
@@ -196,26 +198,60 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 462,
-        "y": 394,
+        "x": 973.857177734375,
+        "y": 435.7142639160156,
         "wires": [
-            []
+            [
+                "1e13b1d4.2bf726"
+            ]
         ]
     },
     {
         "id": "2cfc4b83.be2644",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Resultado Consulta",
-        "func": "var results = msg.payload;\nvar output=null;\nif(results.length>0){\n    output=results[0].id;\n}\n\nvar res = {payload: msg.payload, mensaje: msg.mensaje, queryRes: output }\nreturn res;",
+        "name": "ResDB",
+        "func": "var results = msg.payload;\nvar output=null;\nvar estado = 0;\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n    \n}\n//payload: msg.payload,\nvar res = { mensaje: msg.mensaje, stage:estado, queryRes: output }\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 481,
-        "y": 279,
+        "x": 550.71435546875,
+        "y": 483.7142639160156,
         "wires": [
             [
                 "26be8463.db5a64"
             ]
+        ]
+    },
+    {
+        "id": "1e13b1d4.2bf726",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "Stage?",
+        "property": "stage",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0"
+            },
+            {
+                "t": "eq",
+                "v": "1"
+            },
+            {
+                "t": "eq",
+                "v": "2"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 3,
+        "x": 1098.28564453125,
+        "y": 489.2856750488281,
+        "wires": [
+            [
+                "990d1be3.d2ab08"
+            ],
+            [],
+            []
         ]
     }
 ]
