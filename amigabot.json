@@ -76,7 +76,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Procesar Mensaje",
-        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {payload: mensaje};\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
+        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "3",
         "noerr": 0,
         "x": 1321.857177734375,
@@ -94,7 +94,7 @@
         "type": "switch",
         "z": "2667e117.0ef57e",
         "name": "Procesar Comandos",
-        "property": "payload",
+        "property": "text",
         "rules": [
             {
                 "t": "eq",
@@ -114,7 +114,9 @@
         "x": 1545.857177734375,
         "y": 379.7142639160156,
         "wires": [
-            [],
+            [
+                "1fff98b8.ef58b7"
+            ],
             [],
             []
         ]
@@ -244,8 +246,8 @@
         ],
         "checkall": "false",
         "outputs": 3,
-        "x": 1098.28564453125,
-        "y": 489.2856750488281,
+        "x": 1127.1744384765625,
+        "y": 490.396728515625,
         "wires": [
             [
                 "990d1be3.d2ab08"
@@ -253,5 +255,49 @@
             [],
             []
         ]
+    },
+    {
+        "id": "bca8bffa.1ecc8",
+        "type": "http request",
+        "z": "2667e117.0ef57e",
+        "name": "Respuesta",
+        "method": "POST",
+        "ret": "txt",
+        "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
+        "x": 2099.7779541015625,
+        "y": 388.77777099609375,
+        "wires": [
+            [
+                "9d9cadd5.09623"
+            ]
+        ]
+    },
+    {
+        "id": "1fff98b8.ef58b7",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "setPayload",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\n\nmsg.payload = { chat_id: id, text: 'Hola, '+nombre }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1780,
+        "y": 343.3333333333333,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "9d9cadd5.09623",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 2382.222222222222,
+        "y": 455.55555555555554,
+        "wires": []
     }
 ]
