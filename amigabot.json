@@ -22,6 +22,11 @@
         "name": ""
     },
     {
+        "id": "b2b1b72f.adb8d8",
+        "type": "google-api-config",
+        "z": "2667e117.0ef57e"
+    },
+    {
         "id": "77182b8a.32db3c",
         "type": "http in",
         "z": "2667e117.0ef57e",
@@ -83,18 +88,19 @@
         "id": "990d1be3.d2ab08",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Procesar Mensaje",
-        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {payload: loc}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
-        "outputs": "3",
+        "name": "ProcText",
+        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
+        "outputs": "2",
         "noerr": 0,
-        "x": 1108.857177734375,
-        "y": 395.7142639160156,
+        "x": 1075.857177734375,
+        "y": 396.7142639160156,
         "wires": [
             [
                 "425d6f3.bbc9c1"
             ],
-            [],
-            []
+            [
+                "fef0675e.f4637"
+            ]
         ]
     },
     {
@@ -110,23 +116,33 @@
             },
             {
                 "t": "eq",
-                "v": "/cancelar"
+                "v": "/registro"
             },
             {
                 "t": "eq",
-                "v": "/registro"
+                "v": "/emergencia"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "false",
-        "outputs": 3,
-        "x": 1333.857177734375,
-        "y": 333.7142639160156,
+        "outputs": 4,
+        "x": 1279.857177734375,
+        "y": 331.7142639160156,
         "wires": [
             [
                 "1fff98b8.ef58b7"
             ],
-            [],
-            []
+            [
+                "8dfd7f60.95bb6"
+            ],
+            [
+                "9aff465c.efb3d"
+            ],
+            [
+                "fef0675e.f4637"
+            ]
         ]
     },
     {
@@ -250,15 +266,22 @@
             {
                 "t": "eq",
                 "v": "2"
+            },
+            {
+                "t": "eq",
+                "v": "3"
             }
         ],
         "checkall": "false",
-        "outputs": 3,
+        "outputs": 4,
         "x": 932.1744384765625,
         "y": 456.396728515625,
         "wires": [
             [
                 "990d1be3.d2ab08"
+            ],
+            [
+                "22adb89e.88735"
             ],
             [],
             []
@@ -272,8 +295,8 @@
         "method": "POST",
         "ret": "txt",
         "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
-        "x": 1662.7779541015625,
-        "y": 301.77777099609375,
+        "x": 1738.5556030273438,
+        "y": 367.3333435058594,
         "wires": [
             [
                 "9d9cadd5.09623"
@@ -284,16 +307,15 @@
         "id": "1fff98b8.ef58b7",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "setPayload",
-        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\n\nmsg.payload = { chat_id: id, text: 'Hola, '+nombre }\nreturn msg;",
+        "name": "/start",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Para empezar, registrate pulsando sobre el comando: /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1519,
-        "y": 302.3333435058594,
+        "x": 1471,
+        "y": 284.3333435058594,
         "wires": [
             [
-                "bca8bffa.1ecc8",
-                "b2ef3382.8f5ee"
+                "bca8bffa.1ecc8"
             ]
         ]
     },
@@ -305,8 +327,8 @@
         "active": true,
         "console": "false",
         "complete": "true",
-        "x": 1792.22216796875,
-        "y": 301.5555419921875,
+        "x": 1980.1109619140625,
+        "y": 340.22216796875,
         "wires": []
     },
     {
@@ -317,9 +339,172 @@
         "twilioType": "sms",
         "url": "",
         "number": "+34606064085",
-        "name": "",
-        "x": 1654,
-        "y": 344,
+        "name": "enviarSMS",
+        "x": 1501,
+        "y": 565,
         "wires": []
+    },
+    {
+        "id": "8dfd7f60.95bb6",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/registro",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para registrarte, primero indícame cuál es tu dirección completa: \"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1472.8890380859375,
+        "y": 317.00001525878906,
+        "wires": [
+            [
+                "bca8bffa.1ecc8",
+                "623c1e80.6a3c2"
+            ]
+        ]
+    },
+    {
+        "id": "fef0675e.f4637",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1467.6669921875,
+        "y": 402.1111145019531,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "9aff465c.efb3d",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/emergencia",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para poder notificar de una emergencia, primero necesito que te registres. Pulsa sobre /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1485.8888549804688,
+        "y": 350.1111145019531,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "623c1e80.6a3c2",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Registro",
+        "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1730.0003051757812,
+        "y": 318.8888854980469,
+        "wires": [
+            [
+                "d3171200.450c3"
+            ]
+        ]
+    },
+    {
+        "id": "d3171200.450c3",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "2acbd3e8.812b5c",
+        "name": "",
+        "x": 1849.9996948242188,
+        "y": 318.8888854980469,
+        "wires": [
+            [
+                "9d9cadd5.09623"
+            ]
+        ]
+    },
+    {
+        "id": "22adb89e.88735",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "ProcText",
+        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 1075.5556335449219,
+        "y": 450.00006103515625,
+        "wires": [
+            [
+                "20bdb9af.cc0ca6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "20bdb9af.cc0ca6",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Dirección",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia.\"\n\nmsg.payload = { chat_id: id, text: texto }\nmsg.location.address = msg.mensaje.text\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1473.3331909179688,
+        "y": 442.22222900390625,
+        "wires": [
+            [
+                "bca8bffa.1ecc8",
+                "a5020c94.6cf7f8"
+            ]
+        ]
+    },
+    {
+        "id": "fcff0761.e11638",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Crear Usuario",
+        "func": "var id = msg.mensaje.from.id\n\nvar query = \"INSERT INTO iap.local (id,lat,lon, full_address)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1991.1110229492188,
+        "y": 418.88897705078125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2561de98.445252",
+        "type": "http request",
+        "z": "2667e117.0ef57e",
+        "name": "Respuesta",
+        "method": "POST",
+        "ret": "txt",
+        "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
+        "x": 2004.4446411132812,
+        "y": 493.33331298828125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a5020c94.6cf7f8",
+        "type": "google geocoding",
+        "z": "2667e117.0ef57e",
+        "name": "Geocodificación",
+        "geocodeBy": "address",
+        "address": "",
+        "lat": "",
+        "lon": "",
+        "googleAPI": "b2b1b72f.adb8d8",
+        "bounds": "",
+        "language": "",
+        "region": "",
+        "components": "",
+        "x": 1771.1111450195312,
+        "y": 442.2222900390625,
+        "wires": [
+            [
+                "9d9cadd5.09623"
+            ]
+        ]
     }
 ]
