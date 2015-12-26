@@ -58,7 +58,7 @@
         "z": "2667e117.0ef57e",
         "name": "Mensaje Prueba",
         "topic": "Telegram message",
-        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731 , \"text\": \"/start\", \"location\": 123} }",
+        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731 , \"text\": \"Calle Castán Tobeñas, 55, Valencia\", \"location\": 123} }",
         "payloadType": "string",
         "repeat": "",
         "crontab": "",
@@ -88,12 +88,12 @@
         "id": "990d1be3.d2ab08",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "ProcText",
+        "name": "Stage0",
         "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "2",
         "noerr": 0,
-        "x": 1075.857177734375,
-        "y": 396.7142639160156,
+        "x": 1076.857177734375,
+        "y": 405.7142639160156,
         "wires": [
             [
                 "425d6f3.bbc9c1"
@@ -207,7 +207,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Crear Usuario",
-        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
         "x": 642.857177734375,
@@ -283,8 +283,12 @@
             [
                 "22adb89e.88735"
             ],
-            [],
-            []
+            [
+                "e825ad20.a977d8"
+            ],
+            [
+                "46d1505c.faee38"
+            ]
         ]
     },
     {
@@ -295,12 +299,10 @@
         "method": "POST",
         "ret": "txt",
         "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
-        "x": 1738.5556030273438,
-        "y": 367.3333435058594,
+        "x": 1737.5556640625,
+        "y": 351.3333435058594,
         "wires": [
-            [
-                "9d9cadd5.09623"
-            ]
+            []
         ]
     },
     {
@@ -318,18 +320,6 @@
                 "bca8bffa.1ecc8"
             ]
         ]
-    },
-    {
-        "id": "9d9cadd5.09623",
-        "type": "debug",
-        "z": "2667e117.0ef57e",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "true",
-        "x": 1980.1109619140625,
-        "y": 340.22216796875,
-        "wires": []
     },
     {
         "id": "b2ef3382.8f5ee",
@@ -397,12 +387,12 @@
         "id": "623c1e80.6a3c2",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Registro",
+        "name": "AEtapa",
         "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1730.0003051757812,
-        "y": 318.8888854980469,
+        "x": 2005.000244140625,
+        "y": 317.8888854980469,
         "wires": [
             [
                 "d3171200.450c3"
@@ -415,24 +405,22 @@
         "z": "2667e117.0ef57e",
         "mydb": "2acbd3e8.812b5c",
         "name": "",
-        "x": 1849.9996948242188,
-        "y": 318.8888854980469,
+        "x": 2180.999755859375,
+        "y": 364.8888854980469,
         "wires": [
-            [
-                "9d9cadd5.09623"
-            ]
+            []
         ]
     },
     {
         "id": "22adb89e.88735",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "ProcText",
+        "name": "Stage1",
         "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
         "outputs": "2",
         "noerr": 0,
-        "x": 1075.5556335449219,
-        "y": 450.00006103515625,
+        "x": 1076.5556640625,
+        "y": 438.00006103515625,
         "wires": [
             [
                 "20bdb9af.cc0ca6"
@@ -445,11 +433,11 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Dirección",
-        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia.\"\n\nmsg.payload = { chat_id: id, text: texto }\nmsg.location.address = msg.mensaje.text\nreturn msg;",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia: \"\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1473.3331909179688,
-        "y": 442.22222900390625,
+        "x": 1472.333251953125,
+        "y": 435.22222900390625,
         "wires": [
             [
                 "bca8bffa.1ecc8",
@@ -461,28 +449,16 @@
         "id": "fcff0761.e11638",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Crear Usuario",
-        "func": "var id = msg.mensaje.from.id\n\nvar query = \"INSERT INTO iap.local (id,lat,lon, full_address)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "name": "Localización",
+        "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1991.1110229492188,
-        "y": 418.88897705078125,
+        "x": 1994.111083984375,
+        "y": 364.88897705078125,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "2561de98.445252",
-        "type": "http request",
-        "z": "2667e117.0ef57e",
-        "name": "Respuesta",
-        "method": "POST",
-        "ret": "txt",
-        "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
-        "x": 2004.4446411132812,
-        "y": 493.33331298828125,
-        "wires": [
-            []
+            [
+                "d3171200.450c3"
+            ]
         ]
     },
     {
@@ -499,12 +475,59 @@
         "language": "",
         "region": "",
         "components": "",
-        "x": 1771.1111450195312,
-        "y": 442.2222900390625,
+        "x": 1753.111083984375,
+        "y": 384.2222900390625,
         "wires": [
             [
-                "9d9cadd5.09623"
+                "fcff0761.e11638",
+                "81aca8be.c1b95"
             ]
+        ]
+    },
+    {
+        "id": "81aca8be.c1b95",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "AEtapa",
+        "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=2 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1982,
+        "y": 400,
+        "wires": [
+            [
+                "d3171200.450c3"
+            ]
+        ]
+    },
+    {
+        "id": "e825ad20.a977d8",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Stage2",
+        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 1076,
+        "y": 469,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "46d1505c.faee38",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Stage3",
+        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 1077,
+        "y": 500,
+        "wires": [
+            [],
+            []
         ]
     }
 ]
