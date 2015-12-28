@@ -27,6 +27,15 @@
         "z": "2667e117.0ef57e"
     },
     {
+        "id": "5013ee51.ef7ea8",
+        "type": "MySQLdatabase",
+        "z": "2667e117.0ef57e",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "iap",
+        "tz": ""
+    },
+    {
         "id": "77182b8a.32db3c",
         "type": "http in",
         "z": "2667e117.0ef57e",
@@ -85,25 +94,6 @@
         ]
     },
     {
-        "id": "990d1be3.d2ab08",
-        "type": "function",
-        "z": "2667e117.0ef57e",
-        "name": "Stage0",
-        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
-        "outputs": "2",
-        "noerr": 0,
-        "x": 1076.857177734375,
-        "y": 405.7142639160156,
-        "wires": [
-            [
-                "425d6f3.bbc9c1"
-            ],
-            [
-                "fef0675e.f4637"
-            ]
-        ]
-    },
-    {
         "id": "425d6f3.bbc9c1",
         "type": "switch",
         "z": "2667e117.0ef57e",
@@ -128,8 +118,8 @@
         ],
         "checkall": "false",
         "outputs": 4,
-        "x": 1279.857177734375,
-        "y": 331.7142639160156,
+        "x": 1225.5714721679688,
+        "y": 291.7142639160156,
         "wires": [
             [
                 "1fff98b8.ef58b7"
@@ -149,7 +139,7 @@
         "id": "a0a2262.775ced8",
         "type": "mysql",
         "z": "2667e117.0ef57e",
-        "mydb": "2acbd3e8.812b5c",
+        "mydb": "5013ee51.ef7ea8",
         "name": "",
         "x": 246.0001220703125,
         "y": 449.7142333984375,
@@ -222,7 +212,7 @@
         "id": "aaca03e8.66d258",
         "type": "mysql",
         "z": "2667e117.0ef57e",
-        "mydb": "2acbd3e8.812b5c",
+        "mydb": "5013ee51.ef7ea8",
         "name": "",
         "x": 787.857177734375,
         "y": 405.7142639160156,
@@ -236,8 +226,8 @@
         "id": "2cfc4b83.be2644",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "ResDB",
-        "func": "var results = msg.payload;\nvar output=null;\nvar estado = 0;\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n    \n}\n//payload: msg.payload,\nvar res = { mensaje: msg.mensaje, stage:estado, queryRes: output }\nreturn res;",
+        "name": "setPayload",
+        "func": "var results = msg.payload;\nvar update = msg.mensaje;\nvar res = null;\nvar output=null;\nvar type = null;\nvar estado = 0;\n\n\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n}\n\nif(update.text){\n    var mensaje = update.text;\n    type = \"text\";\n    res = {\n        text     : mensaje, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n\n}\nelse if(update.location){\n    var loc = update.location;\n    type = \"location\";\n    res = {\n        location : loc, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n}\n\nreturn res;",
         "outputs": 1,
         "noerr": 0,
         "x": 365.71435546875,
@@ -275,19 +265,19 @@
         "checkall": "false",
         "outputs": 4,
         "x": 932.1744384765625,
-        "y": 456.396728515625,
+        "y": 456.3966979980469,
         "wires": [
             [
-                "990d1be3.d2ab08"
+                "740fedd.c349314"
             ],
             [
-                "22adb89e.88735"
+                "9f129102.db316"
             ],
             [
-                "e825ad20.a977d8"
+                "7538205d.32fe9"
             ],
             [
-                "46d1505c.faee38"
+                "4242c002.f5b1d8"
             ]
         ]
     },
@@ -359,8 +349,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1467.6669921875,
-        "y": 402.1111145019531,
+        "x": 1467.6670532226562,
+        "y": 382.11114501953125,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -387,7 +377,7 @@
         "id": "623c1e80.6a3c2",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Registro",
+        "name": "AEtapa",
         "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
@@ -403,28 +393,11 @@
         "id": "d3171200.450c3",
         "type": "mysql",
         "z": "2667e117.0ef57e",
-        "mydb": "2acbd3e8.812b5c",
+        "mydb": "5013ee51.ef7ea8",
         "name": "",
-        "x": 2176.999755859375,
-        "y": 350.8888854980469,
+        "x": 2180.999755859375,
+        "y": 364.8888854980469,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "22adb89e.88735",
-        "type": "function",
-        "z": "2667e117.0ef57e",
-        "name": "Stage1",
-        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
-        "outputs": "2",
-        "noerr": 0,
-        "x": 1076.5556640625,
-        "y": 438.00006103515625,
-        "wires": [
-            [
-                "20bdb9af.cc0ca6"
-            ],
             []
         ]
     },
@@ -436,8 +409,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia: \"\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1472.333251953125,
-        "y": 435.22222900390625,
+        "x": 1473.7618408203125,
+        "y": 415.22222900390625,
         "wires": [
             [
                 "bca8bffa.1ecc8",
@@ -488,7 +461,7 @@
         "id": "81aca8be.c1b95",
         "type": "function",
         "z": "2667e117.0ef57e",
-        "name": "Registro",
+        "name": "AEtapa",
         "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=2 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
@@ -501,30 +474,106 @@
         ]
     },
     {
-        "id": "e825ad20.a977d8",
-        "type": "function",
+        "id": "740fedd.c349314",
+        "type": "switch",
         "z": "2667e117.0ef57e",
-        "name": "Stage2",
-        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
-        "outputs": "2",
-        "noerr": 0,
-        "x": 1076,
-        "y": 469,
+        "name": "stage0",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1079.9998168945312,
+        "y": 408.5714111328125,
+        "wires": [
+            [
+                "425d6f3.bbc9c1"
+            ],
+            [
+                "fef0675e.f4637"
+            ]
+        ]
+    },
+    {
+        "id": "9f129102.db316",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "stage1",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1080,
+        "y": 441.42852783203125,
+        "wires": [
+            [
+                "20bdb9af.cc0ca6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7538205d.32fe9",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "stage2",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1079.9999389648438,
+        "y": 474.2856750488281,
         "wires": [
             [],
             []
         ]
     },
     {
-        "id": "46d1505c.faee38",
-        "type": "function",
+        "id": "4242c002.f5b1d8",
+        "type": "switch",
         "z": "2667e117.0ef57e",
-        "name": "Stage3",
-        "func": "var update = msg.mensaje;\nif(update.text){\n    var mensaje = update.text;\n    var output = {text: mensaje, stage:msg.stage, mensaje:msg.mensaje};\n    output = output\n\n    return [output, null, null];\n}\nelse if(update.location){\n    var loc = update.location;\n    var output = {location: loc, stage:msg.stage, mensaje: msg.mensaje}\n    return [null, output, null]\n} else{\n    return msg;\n}\n",
-        "outputs": "2",
-        "noerr": 0,
-        "x": 1077,
-        "y": 500,
+        "name": "stage3",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1081.4285888671875,
+        "y": 508.5714111328125,
         "wires": [
             [],
             []
