@@ -30,7 +30,7 @@
         "id": "5013ee51.ef7ea8",
         "type": "MySQLdatabase",
         "z": "2667e117.0ef57e",
-        "host": "127.0.0.1",
+        "host": "iap.c8rqb14cuaul.us-east-1.rds.amazonaws.com",
         "port": "3306",
         "db": "iap",
         "tz": ""
@@ -289,10 +289,12 @@
         "method": "POST",
         "ret": "txt",
         "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
-        "x": 1737.5556640625,
-        "y": 351.3333435058594,
+        "x": 1798.5556030273438,
+        "y": 821.8889770507812,
         "wires": [
-            []
+            [
+                "d17b3f55.25e8e8"
+            ]
         ]
     },
     {
@@ -300,11 +302,11 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "/start",
-        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Para empezar, registrate pulsando sobre el comando: /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Para empezar, registrate pulsando sobre el comando: /registro .\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1471,
-        "y": 284.3333435058594,
+        "x": 1519.9882202148438,
+        "y": 276.84527587890625,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -320,8 +322,8 @@
         "url": "",
         "number": "+34606064085",
         "name": "enviarSMS",
-        "x": 1501,
-        "y": 565,
+        "x": 2363.9166870117188,
+        "y": 486.52777099609375,
         "wires": []
     },
     {
@@ -332,12 +334,12 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para registrarte, primero indícame cuál es tu dirección completa: \"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1472.8890380859375,
-        "y": 317.00001525878906,
+        "x": 1516.365234375,
+        "y": 308.797607421875,
         "wires": [
             [
                 "bca8bffa.1ecc8",
-                "623c1e80.6a3c2"
+                "81aca8be.c1b95"
             ]
         ]
     },
@@ -349,8 +351,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1467.6670532226562,
-        "y": 382.11114501953125,
+        "x": 1520.250244140625,
+        "y": 373.9722595214844,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -365,40 +367,12 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para poder notificar de una emergencia, primero necesito que te registres. Pulsa sobre /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1485.8888549804688,
-        "y": 350.1111145019531,
+        "x": 1505.1388549804688,
+        "y": 340.8611145019531,
         "wires": [
             [
                 "bca8bffa.1ecc8"
             ]
-        ]
-    },
-    {
-        "id": "623c1e80.6a3c2",
-        "type": "function",
-        "z": "2667e117.0ef57e",
-        "name": "AEtapa",
-        "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 2005.000244140625,
-        "y": 317.8888854980469,
-        "wires": [
-            [
-                "d3171200.450c3"
-            ]
-        ]
-    },
-    {
-        "id": "d3171200.450c3",
-        "type": "mysql",
-        "z": "2667e117.0ef57e",
-        "mydb": "5013ee51.ef7ea8",
-        "name": "",
-        "x": 2180.999755859375,
-        "y": 364.8888854980469,
-        "wires": [
-            []
         ]
     },
     {
@@ -409,12 +383,13 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia: \"\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1473.7618408203125,
-        "y": 415.22222900390625,
+        "x": 1512.7341918945312,
+        "y": 406.94049072265625,
         "wires": [
             [
                 "bca8bffa.1ecc8",
-                "a5020c94.6cf7f8"
+                "a5020c94.6cf7f8",
+                "81aca8be.c1b95"
             ]
         ]
     },
@@ -426,11 +401,11 @@
         "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1994.111083984375,
-        "y": 364.88897705078125,
+        "x": 2107.32470703125,
+        "y": 438.2818298339844,
         "wires": [
             [
-                "d3171200.450c3"
+                "bf9b24a1.7b84a"
             ]
         ]
     },
@@ -448,8 +423,8 @@
         "language": "",
         "region": "",
         "components": "",
-        "x": 1753.111083984375,
-        "y": 384.2222900390625,
+        "x": 1932.6148681640625,
+        "y": 404.04345703125,
         "wires": [
             [
                 "fcff0761.e11638",
@@ -462,14 +437,14 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "AEtapa",
-        "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=2 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=stage+1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1982,
-        "y": 400,
+        "x": 2094.54736328125,
+        "y": 318.8570251464844,
         "wires": [
             [
-                "d3171200.450c3"
+                "bf9b24a1.7b84a"
             ]
         ]
     },
@@ -526,7 +501,9 @@
             [
                 "20bdb9af.cc0ca6"
             ],
-            []
+            [
+                "7deac5b9.366564"
+            ]
         ]
     },
     {
@@ -550,8 +527,12 @@
         "x": 1079.9999389648438,
         "y": 474.2856750488281,
         "wires": [
-            [],
-            []
+            [
+                "8483c550.90b128"
+            ],
+            [
+                "4ecb7f1d.4d719"
+            ]
         ]
     },
     {
@@ -563,11 +544,11 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "text"
+                "v": "location"
             },
             {
                 "t": "eq",
-                "v": "location"
+                "v": "text"
             }
         ],
         "checkall": "true",
@@ -575,8 +556,224 @@
         "x": 1081.4285888671875,
         "y": 508.5714111328125,
         "wires": [
-            [],
+            [
+                "14cd6210.60751e"
+            ],
+            [
+                "50a27a2a.d5c564"
+            ]
+        ]
+    },
+    {
+        "id": "8483c550.90b128",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Teléfono",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, tu registro se ha completado.\\n \"+\n            \"A partir de ahora, si te encuentras en peligro, simplemente, pulsa sobre el comando /emergencia o envía la ubicación de dónde te encuentres\"\nvar tel = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, telefono:tel, mensaje: msg.mensaje};\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1518.353759765625,
+        "y": 470.4088134765625,
+        "wires": [
+            [
+                "81aca8be.c1b95",
+                "6531b023.fd4d88"
+            ]
+        ]
+    },
+    {
+        "id": "6531b023.fd4d88",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Telefono",
+        "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2094.107177734375,
+        "y": 471.23004150390625,
+        "wires": [
+            [
+                "bf9b24a1.7b84a",
+                "b2ef3382.8f5ee"
+            ]
+        ]
+    },
+    {
+        "id": "50a27a2a.d5c564",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "Procesar Comandos",
+        "property": "text",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "/start"
+            },
+            {
+                "t": "eq",
+                "v": "/registro"
+            },
+            {
+                "t": "eq",
+                "v": "/emergencia"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 4,
+        "x": 1222.6666259765625,
+        "y": 633.3334350585938,
+        "wires": [
+            [
+                "70cbfe2.6a9c6"
+            ],
+            [
+                "c90ac6cb.2b8278"
+            ],
+            [
+                "9b34b5ba.288838"
+            ],
+            [
+                "bb268127.19cd38"
+            ]
+        ]
+    },
+    {
+        "id": "70cbfe2.6a9c6",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/start",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Si necesitas ayuda, pulsa sobre el comando /emergencia o envía tu localización si no estás en casa.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1523.1943969726562,
+        "y": 568.2499694824219,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "c90ac6cb.2b8278",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/registro",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para registrarte, primero indícame cuál es tu dirección completa: \"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1519.02783203125,
+        "y": 600.8887634277344,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "9b34b5ba.288838",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/emergencia",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para poder notificar de una emergencia, primero necesito que te registres. Pulsa sobre /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1506.25,
+        "y": 633.1111145019531,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "bf9b24a1.7b84a",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 2352.4999389648438,
+        "y": 451.24993896484375,
+        "wires": [
             []
+        ]
+    },
+    {
+        "id": "bb268127.19cd38",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1522.4999389648438,
+        "y": 665.4167175292969,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "7deac5b9.366564",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1521.2500610351562,
+        "y": 438.7499694824219,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "4ecb7f1d.4d719",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1524.583251953125,
+        "y": 502.0833435058594,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "d17b3f55.25e8e8",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "debug",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1971.6668701171875,
+        "y": 821.6666259765625,
+        "wires": []
+    },
+    {
+        "id": "14cd6210.60751e",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Localización",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia: \"\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1508.3333129882812,
+        "y": 534.9999084472656,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
         ]
     }
 ]
