@@ -2,7 +2,45 @@
     {
         "type": "tab",
         "id": "2667e117.0ef57e",
-        "label": "Sheet 1"
+        "label": "GestBOT"
+    },
+    {
+        "type": "tab",
+        "id": "ea3277a.93ccf08",
+        "label": "PublicaGeoJSON"
+    },
+    {
+        "id": "b12972e2.ab5a7",
+        "type": "subflow",
+        "name": "GestUsuarios",
+        "info": "",
+        "in": [
+            {
+                "x": 41,
+                "y": 90,
+                "wires": [
+                    {
+                        "id": "7441792b.f2325"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 909,
+                "y": 239,
+                "wires": [
+                    {
+                        "id": "20bcc1d4.135476",
+                        "port": 0
+                    },
+                    {
+                        "id": "36da8566.d99882",
+                        "port": 1
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "2acbd3e8.812b5c",
@@ -48,7 +86,7 @@
         "wires": [
             [
                 "74e003be.bf6344",
-                "8736ea0.7f5b198"
+                "2bc055ca.0fa9f2"
             ]
         ]
     },
@@ -57,8 +95,8 @@
         "type": "http response",
         "z": "2667e117.0ef57e",
         "name": "RESP: 200 OK",
-        "x": 317.5714416503906,
-        "y": 324.1428527832031,
+        "x": 290.90472412109375,
+        "y": 210.80955505371094,
         "wires": []
     },
     {
@@ -67,13 +105,13 @@
         "z": "2667e117.0ef57e",
         "name": "Mensaje Prueba",
         "topic": "Telegram message",
-        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731 , \"text\": \"Calle Castán Tobeñas, 55, Valencia\", \"location\": 123} }",
+        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 10836823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731 , \"text\": \"Calle Castán Tobeñas, 55, Valencia\", \"location\": 123} }",
         "payloadType": "string",
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 145.64291381835938,
-        "y": 695.2857055664062,
+        "x": 119.92861938476562,
+        "y": 706.7142333984375,
         "wires": [
             [
                 "39dd5d91.012faa"
@@ -89,7 +127,7 @@
         "y": 598.7142333984375,
         "wires": [
             [
-                "8736ea0.7f5b198"
+                "2bc055ca.0fa9f2"
             ]
         ]
     },
@@ -118,8 +156,8 @@
         ],
         "checkall": "false",
         "outputs": 4,
-        "x": 1225.5714721679688,
-        "y": 291.7142639160156,
+        "x": 565.5716552734375,
+        "y": 285.0476989746094,
         "wires": [
             [
                 "1fff98b8.ef58b7"
@@ -132,109 +170,6 @@
             ],
             [
                 "fef0675e.f4637"
-            ]
-        ]
-    },
-    {
-        "id": "a0a2262.775ced8",
-        "type": "mysql",
-        "z": "2667e117.0ef57e",
-        "mydb": "5013ee51.ef7ea8",
-        "name": "",
-        "x": 246.0001220703125,
-        "y": 449.7142333984375,
-        "wires": [
-            [
-                "2cfc4b83.be2644"
-            ]
-        ]
-    },
-    {
-        "id": "8736ea0.7f5b198",
-        "type": "function",
-        "z": "2667e117.0ef57e",
-        "name": "BuscaUsuario",
-        "func": "var query = \"SELECT id, stage, first_name, last_name, username FROM iap.users WHERE id=\"+msg.payload.message.from.id;\nvar output = {payload: msg.payload, mensaje:msg.payload.message, topic: query};\nreturn output;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 104.57144165039062,
-        "y": 449.7142333984375,
-        "wires": [
-            [
-                "a0a2262.775ced8"
-            ]
-        ]
-    },
-    {
-        "id": "26be8463.db5a64",
-        "type": "switch",
-        "z": "2667e117.0ef57e",
-        "name": "",
-        "property": "queryRes",
-        "rules": [
-            {
-                "t": "null"
-            },
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "false",
-        "outputs": 2,
-        "x": 488.857177734375,
-        "y": 449.7142333984375,
-        "wires": [
-            [
-                "57cb5abc.0da214"
-            ],
-            [
-                "1e13b1d4.2bf726"
-            ]
-        ]
-    },
-    {
-        "id": "57cb5abc.0da214",
-        "type": "function",
-        "z": "2667e117.0ef57e",
-        "name": "Crear Usuario",
-        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 642.857177734375,
-        "y": 405.7142639160156,
-        "wires": [
-            [
-                "aaca03e8.66d258"
-            ]
-        ]
-    },
-    {
-        "id": "aaca03e8.66d258",
-        "type": "mysql",
-        "z": "2667e117.0ef57e",
-        "mydb": "5013ee51.ef7ea8",
-        "name": "",
-        "x": 787.857177734375,
-        "y": 405.7142639160156,
-        "wires": [
-            [
-                "1e13b1d4.2bf726"
-            ]
-        ]
-    },
-    {
-        "id": "2cfc4b83.be2644",
-        "type": "function",
-        "z": "2667e117.0ef57e",
-        "name": "setPayload",
-        "func": "var results = msg.payload;\nvar update = msg.mensaje;\nvar res = null;\nvar output=null;\nvar type = null;\nvar estado = 0;\n\n\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n}\n\nif(update.text){\n    var mensaje = update.text;\n    type = \"text\";\n    res = {\n        text     : mensaje, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n\n}\nelse if(update.location){\n    var loc = update.location;\n    type = \"location\";\n    res = {\n        location : loc, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n}\n\nreturn res;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 365.71435546875,
-        "y": 449.7142333984375,
-        "wires": [
-            [
-                "26be8463.db5a64"
             ]
         ]
     },
@@ -264,8 +199,8 @@
         ],
         "checkall": "false",
         "outputs": 4,
-        "x": 932.1744384765625,
-        "y": 456.3966979980469,
+        "x": 272.17462158203125,
+        "y": 449.7301330566406,
         "wires": [
             [
                 "740fedd.c349314"
@@ -289,12 +224,10 @@
         "method": "POST",
         "ret": "txt",
         "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
-        "x": 1897.5556640625,
-        "y": 666.8889770507812,
+        "x": 1184.5558471679688,
+        "y": 700.222412109375,
         "wires": [
-            [
-                "d17b3f55.25e8e8"
-            ]
+            []
         ]
     },
     {
@@ -305,8 +238,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Para empezar, registrate pulsando sobre el comando: /registro .\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1518.98828125,
-        "y": 266.84527587890625,
+        "x": 858.9884643554688,
+        "y": 260.1787109375,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -322,8 +255,8 @@
         "url": "",
         "number": "+34606064085",
         "name": "enviarSMS",
-        "x": 2343.916748046875,
-        "y": 550.5277709960938,
+        "x": 1709.4884033203125,
+        "y": 485.1468811035156,
         "wires": []
     },
     {
@@ -334,8 +267,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para registrarte, primero indícame cuál es tu dirección completa: \"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1515.3652954101562,
-        "y": 298.797607421875,
+        "x": 855.365478515625,
+        "y": 292.13104248046875,
         "wires": [
             [
                 "bca8bffa.1ecc8",
@@ -351,8 +284,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1519.2503051757812,
-        "y": 363.9722595214844,
+        "x": 859.25048828125,
+        "y": 357.3056945800781,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -367,8 +300,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para poder notificar de una emergencia, primero necesito que te registres. Pulsa sobre /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1504.138916015625,
-        "y": 330.8611145019531,
+        "x": 844.1390991210938,
+        "y": 324.1945495605469,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -383,13 +316,12 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia: \"\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1511.7342529296875,
-        "y": 396.94049072265625,
+        "x": 851.7344360351562,
+        "y": 390.27392578125,
         "wires": [
             [
                 "bca8bffa.1ecc8",
-                "a5020c94.6cf7f8",
-                "81aca8be.c1b95"
+                "a5020c94.6cf7f8"
             ]
         ]
     },
@@ -401,11 +333,12 @@
         "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2108.32470703125,
-        "y": 424.2818298339844,
+        "x": 1289.3248901367188,
+        "y": 389.6152648925781,
         "wires": [
             [
-                "bf9b24a1.7b84a"
+                "bf9b24a1.7b84a",
+                "81aca8be.c1b95"
             ]
         ]
     },
@@ -423,12 +356,11 @@
         "language": "",
         "region": "",
         "components": "",
-        "x": 1933.6148681640625,
-        "y": 395.04345703125,
+        "x": 1120.6150512695312,
+        "y": 389.37689208984375,
         "wires": [
             [
-                "fcff0761.e11638",
-                "81aca8be.c1b95"
+                "fcff0761.e11638"
             ]
         ]
     },
@@ -440,8 +372,8 @@
         "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=stage+1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2120.54736328125,
-        "y": 289.8570251464844,
+        "x": 1531.5475463867188,
+        "y": 286.1904602050781,
         "wires": [
             [
                 "bf9b24a1.7b84a"
@@ -466,8 +398,8 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 1079.9998168945312,
-        "y": 408.5714111328125,
+        "x": 420,
+        "y": 401.90484619140625,
         "wires": [
             [
                 "425d6f3.bbc9c1"
@@ -495,8 +427,8 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 1080,
-        "y": 441.42852783203125,
+        "x": 420.00018310546875,
+        "y": 434.761962890625,
         "wires": [
             [
                 "20bdb9af.cc0ca6"
@@ -524,8 +456,8 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 1079.9999389648438,
-        "y": 474.2856750488281,
+        "x": 420.0001220703125,
+        "y": 467.6191101074219,
         "wires": [
             [
                 "8483c550.90b128"
@@ -553,8 +485,8 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 1081.4285888671875,
-        "y": 508.5714111328125,
+        "x": 421.42877197265625,
+        "y": 501.90484619140625,
         "wires": [
             [
                 "14cd6210.60751e"
@@ -572,12 +504,12 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, tu registro se ha completado.\\n \"+\n            \"A partir de ahora, si te encuentras en peligro, simplemente, pulsa sobre el comando /emergencia o envía la ubicación de dónde te encuentres\"\nvar tel = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, telefono:tel, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1517.3538208007812,
-        "y": 460.4088134765625,
+        "x": 857.35400390625,
+        "y": 453.74224853515625,
         "wires": [
             [
-                "81aca8be.c1b95",
-                "6531b023.fd4d88"
+                "6531b023.fd4d88",
+                "bca8bffa.1ecc8"
             ]
         ]
     },
@@ -589,11 +521,12 @@
         "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\"WHERE id=\"+id;\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2120.107177734375,
-        "y": 459.23004150390625,
+        "x": 1301.1073608398438,
+        "y": 452.5634765625,
         "wires": [
             [
-                "bf9b24a1.7b84a"
+                "bf9b24a1.7b84a",
+                "81aca8be.c1b95"
             ]
         ]
     },
@@ -622,8 +555,8 @@
         ],
         "checkall": "false",
         "outputs": 4,
-        "x": 1222.6666259765625,
-        "y": 633.3334350585938,
+        "x": 562.6668090820312,
+        "y": 626.6668701171875,
         "wires": [
             [
                 "70cbfe2.6a9c6"
@@ -647,8 +580,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Si necesitas ayuda, pulsa sobre el comando /emergencia o envía tu localización si no estás en casa.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1522.1944580078125,
-        "y": 558.2499694824219,
+        "x": 862.1946411132812,
+        "y": 551.5834045410156,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -663,8 +596,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Tu registro ha sido completado. No necesitas hacer nada más.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1518.0278930664062,
-        "y": 590.8887634277344,
+        "x": 858.028076171875,
+        "y": 584.2221984863281,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -679,11 +612,12 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"La ayuda está en camino.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1505.2500610351562,
-        "y": 623.1111145019531,
+        "x": 845.250244140625,
+        "y": 616.4445495605469,
         "wires": [
             [
-                "bca8bffa.1ecc8"
+                "bca8bffa.1ecc8",
+                "d9c8bade.ae5d88"
             ]
         ]
     },
@@ -693,8 +627,8 @@
         "z": "2667e117.0ef57e",
         "mydb": "5013ee51.ef7ea8",
         "name": "",
-        "x": 2352.4999389648438,
-        "y": 451.24993896484375,
+        "x": 1696.5001831054688,
+        "y": 450.5833740234375,
         "wires": [
             []
         ]
@@ -707,8 +641,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1521.5,
-        "y": 655.4167175292969,
+        "x": 861.5001831054688,
+        "y": 648.7501525878906,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -723,8 +657,8 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1520.2501220703125,
-        "y": 428.7499694824219,
+        "x": 860.2503051757812,
+        "y": 422.0834045410156,
         "wires": [
             [
                 "bca8bffa.1ecc8"
@@ -739,25 +673,13 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1523.5833129882812,
-        "y": 492.0833435058594,
+        "x": 863.58349609375,
+        "y": 485.4167785644531,
         "wires": [
             [
                 "bca8bffa.1ecc8"
             ]
         ]
-    },
-    {
-        "id": "d17b3f55.25e8e8",
-        "type": "debug",
-        "z": "2667e117.0ef57e",
-        "name": "debug",
-        "active": true,
-        "console": "false",
-        "complete": "true",
-        "x": 2040.6668701171875,
-        "y": 666.6666259765625,
-        "wires": []
     },
     {
         "id": "14cd6210.60751e",
@@ -767,11 +689,211 @@
         "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"La ayuda está en camino.\";\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1507.3333740234375,
-        "y": 524.9999084472656,
+        "x": 847.3335571289062,
+        "y": 518.3333435058594,
         "wires": [
             [
-                "bca8bffa.1ecc8"
+                "bca8bffa.1ecc8",
+                "d9c8bade.ae5d88"
+            ]
+        ]
+    },
+    {
+        "id": "d9c8bade.ae5d88",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "GeneraAlerta",
+        "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\"WHERE id=\"+id;\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1292.0001831054688,
+        "y": 577.3334350585938,
+        "wires": [
+            [
+                "bf9b24a1.7b84a",
+                "b2ef3382.8f5ee"
+            ]
+        ]
+    },
+    {
+        "id": "e10c4b23.75556",
+        "type": "mysql",
+        "z": "b12972e2.ab5a7",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 218.92868041992188,
+        "y": 233,
+        "wires": [
+            [
+                "5f519534.d2b874"
+            ]
+        ]
+    },
+    {
+        "id": "7441792b.f2325",
+        "type": "function",
+        "z": "b12972e2.ab5a7",
+        "name": "BuscaUsuario",
+        "func": "var query = \"SELECT id, stage, first_name, last_name, username FROM iap.users WHERE id=\"+msg.payload.message.from.id;\nvar output = {payload: msg.payload, mensaje:msg.payload.message, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 155.5,
+        "y": 126,
+        "wires": [
+            [
+                "e10c4b23.75556"
+            ]
+        ]
+    },
+    {
+        "id": "36da8566.d99882",
+        "type": "switch",
+        "z": "b12972e2.ab5a7",
+        "name": "",
+        "property": "queryRes",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 461.7857360839844,
+        "y": 233,
+        "wires": [
+            [
+                "16a501.3e6713"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "16a501.3e6713",
+        "type": "function",
+        "z": "b12972e2.ab5a7",
+        "name": "Crear Usuario",
+        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, text:msg.text, type: msg.type,  topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 615.7857360839844,
+        "y": 189.00003051757812,
+        "wires": [
+            [
+                "20bcc1d4.135476"
+            ]
+        ]
+    },
+    {
+        "id": "20bcc1d4.135476",
+        "type": "mysql",
+        "z": "b12972e2.ab5a7",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 760.7857360839844,
+        "y": 189.00003051757812,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f519534.d2b874",
+        "type": "function",
+        "z": "b12972e2.ab5a7",
+        "name": "setPayload",
+        "func": "var results = msg.payload;\nvar update = msg.mensaje;\nvar res = null;\nvar output=null;\nvar type = null;\nvar estado = 0;\n\n\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n}\n\nif(update.text){\n    var mensaje = update.text;\n    type = \"text\";\n    res = {\n        text     : mensaje, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n\n}\nelse if(update.location){\n    var loc = update.location;\n    type = \"location\";\n    res = {\n        location : loc, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n}\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 338.6429138183594,
+        "y": 233,
+        "wires": [
+            [
+                "36da8566.d99882"
+            ]
+        ]
+    },
+    {
+        "id": "2bc055ca.0fa9f2",
+        "type": "subflow:b12972e2.ab5a7",
+        "z": "2667e117.0ef57e",
+        "x": 117.33331298828125,
+        "y": 448.6666259765625,
+        "wires": [
+            [
+                "1e13b1d4.2bf726"
+            ]
+        ]
+    },
+    {
+        "id": "216fd9a7.12b28e",
+        "type": "http in",
+        "z": "ea3277a.93ccf08",
+        "name": "",
+        "url": "/alertas",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 77.14288330078125,
+        "y": 320,
+        "wires": [
+            [
+                "796f6ced.a54cb4"
+            ]
+        ]
+    },
+    {
+        "id": "796f6ced.a54cb4",
+        "type": "function",
+        "z": "ea3277a.93ccf08",
+        "name": "BuscaAlertas",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 257.1428527832031,
+        "y": 319.9999694824219,
+        "wires": [
+            [
+                "229e56c.b89cb2a"
+            ]
+        ]
+    },
+    {
+        "id": "f8455bb7.07fd48",
+        "type": "http response",
+        "z": "ea3277a.93ccf08",
+        "name": "Resp 200OK",
+        "x": 795.7142333984375,
+        "y": 317.1428527832031,
+        "wires": []
+    },
+    {
+        "id": "229e56c.b89cb2a",
+        "type": "mysql",
+        "z": "ea3277a.93ccf08",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 410.0000305175781,
+        "y": 318.5714111328125,
+        "wires": [
+            [
+                "bb5f9b12.9f2dd8"
+            ]
+        ]
+    },
+    {
+        "id": "bb5f9b12.9f2dd8",
+        "type": "function",
+        "z": "ea3277a.93ccf08",
+        "name": "GeneraGeoJSON",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 571.4285888671875,
+        "y": 317.1428527832031,
+        "wires": [
+            [
+                "f8455bb7.07fd48"
             ]
         ]
     }
