@@ -255,8 +255,8 @@
         "url": "",
         "number": "+34606064085",
         "name": "enviarSMS",
-        "x": 1709.4884033203125,
-        "y": 485.1468811035156,
+        "x": 1666.988525390625,
+        "y": 663.8969116210938,
         "wires": []
     },
     {
@@ -333,8 +333,8 @@
         "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1289.3248901367188,
-        "y": 389.6152648925781,
+        "x": 1460.574951171875,
+        "y": 423.36529541015625,
         "wires": [
             [
                 "bf9b24a1.7b84a",
@@ -356,8 +356,8 @@
         "language": "",
         "region": "",
         "components": "",
-        "x": 1120.6150512695312,
-        "y": 389.37689208984375,
+        "x": 1184.3650512695312,
+        "y": 421.8769073486328,
         "wires": [
             [
                 "fcff0761.e11638"
@@ -372,8 +372,8 @@
         "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=stage+1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1531.5475463867188,
-        "y": 286.1904602050781,
+        "x": 1655.297607421875,
+        "y": 289.9404754638672,
         "wires": [
             [
                 "bf9b24a1.7b84a"
@@ -521,8 +521,8 @@
         "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\"WHERE id=\"+id;\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1301.1073608398438,
-        "y": 452.5634765625,
+        "x": 1472.357421875,
+        "y": 456.3134765625,
         "wires": [
             [
                 "bf9b24a1.7b84a",
@@ -617,7 +617,7 @@
         "wires": [
             [
                 "bca8bffa.1ecc8",
-                "d9c8bade.ae5d88"
+                "f765b963.d85ec"
             ]
         ]
     },
@@ -627,8 +627,8 @@
         "z": "2667e117.0ef57e",
         "mydb": "5013ee51.ef7ea8",
         "name": "",
-        "x": 1696.5001831054688,
-        "y": 450.5833740234375,
+        "x": 1834.000244140625,
+        "y": 485.5833740234375,
         "wires": [
             []
         ]
@@ -686,7 +686,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Localización",
-        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"La ayuda está en camino.\";\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"La ayuda está en camino.\";\nvar lat = msg.mensaje.location.longitude;\nvar lon = msg.mensaje.location.latitude;\n\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{lat: lat, lon:lon}, mensaje: msg.mensaje};\nreturn res;",
         "outputs": 1,
         "noerr": 0,
         "x": 847.3335571289062,
@@ -694,7 +694,7 @@
         "wires": [
             [
                 "bca8bffa.1ecc8",
-                "d9c8bade.ae5d88"
+                "df4905fa.3d9628"
             ]
         ]
     },
@@ -703,15 +703,14 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "GeneraAlerta",
-        "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\"WHERE id=\"+id;\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "func": "var id = msg.mensaje.from.id;\nvar nombre = msg.mensaje.from.first_name;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar apellido = msng.mensaje.from.last_name;\nvar full_address = msg.location.address;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"INSERT INTO iap.alerts (id, lat, lon, nombre, apellido, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1292.0001831054688,
-        "y": 577.3334350585938,
+        "x": 1459.500244140625,
+        "y": 488.58343505859375,
         "wires": [
             [
-                "bf9b24a1.7b84a",
-                "b2ef3382.8f5ee"
+                "bf9b24a1.7b84a"
             ]
         ]
     },
@@ -907,6 +906,44 @@
         "wires": [
             [
                 "f8455bb7.07fd48"
+            ]
+        ]
+    },
+    {
+        "id": "f765b963.d85ec",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "GeneraAlerta",
+        "func": "var id = msg.mensaje.from.id;\nvar nombre = msg.mensaje.from.first_name;\nvar apellido = msng.mensaje.from.last_name;\nvar full_address = null;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\"WHERE id=\"+id;\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1460,
+        "y": 520,
+        "wires": [
+            [
+                "bf9b24a1.7b84a"
+            ]
+        ]
+    },
+    {
+        "id": "df4905fa.3d9628",
+        "type": "google geocoding",
+        "z": "2667e117.0ef57e",
+        "name": "Geocodificación",
+        "geocodeBy": "coordinates",
+        "address": "",
+        "lat": "",
+        "lon": "",
+        "googleAPI": "b2b1b72f.adb8d8",
+        "bounds": "",
+        "language": "",
+        "region": "",
+        "components": "",
+        "x": 1183.75,
+        "y": 490,
+        "wires": [
+            [
+                "d9c8bade.ae5d88"
             ]
         ]
     }
