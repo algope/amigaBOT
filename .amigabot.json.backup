@@ -833,8 +833,8 @@
         "url": "/alertas",
         "method": "get",
         "swaggerDoc": "",
-        "x": 77.14288330078125,
-        "y": 320,
+        "x": 114.68832397460938,
+        "y": 425.5454406738281,
         "wires": [
             [
                 "796f6ced.a54cb4"
@@ -846,11 +846,11 @@
         "type": "function",
         "z": "ea3277a.93ccf08",
         "name": "BuscaAlertas",
-        "func": "var query = \"SELECT * FROM iap.alerts ;\";\nvar output = {payload: msg.payload, topic: query};\nreturn output;",
+        "func": "var query = \"SELECT * FROM iap.alerts ;\";\nvar output = {payload: msg.payload, req:msg.req, res:msg.res, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 257.1428527832031,
-        "y": 319.9999694824219,
+        "x": 305.32464599609375,
+        "y": 331.8182067871094,
         "wires": [
             [
                 "229e56c.b89cb2a"
@@ -862,8 +862,8 @@
         "type": "http response",
         "z": "ea3277a.93ccf08",
         "name": "Resp 200OK",
-        "x": 795.7142333984375,
-        "y": 317.1428527832031,
+        "x": 852.077880859375,
+        "y": 394.41552734375,
         "wires": []
     },
     {
@@ -872,27 +872,11 @@
         "z": "ea3277a.93ccf08",
         "mydb": "5013ee51.ef7ea8",
         "name": "",
-        "x": 410.0000305175781,
-        "y": 318.5714111328125,
+        "x": 465.45458984375,
+        "y": 364.93511962890625,
         "wires": [
             [
-                "bb5f9b12.9f2dd8"
-            ]
-        ]
-    },
-    {
-        "id": "bb5f9b12.9f2dd8",
-        "type": "function",
-        "z": "ea3277a.93ccf08",
-        "name": "GeneraGeoJSON",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 571.4285888671875,
-        "y": 317.1428527832031,
-        "wires": [
-            [
-                "cb783614.b71ba"
+                "394e4263.b4470e"
             ]
         ]
     },
@@ -901,12 +885,10 @@
         "type": "json",
         "z": "ea3277a.93ccf08",
         "name": "",
-        "x": 675.7142857142857,
-        "y": 444.2857142857142,
+        "x": 628.4414672851562,
+        "y": 568.8311767578125,
         "wires": [
-            [
-                "f8455bb7.07fd48"
-            ]
+            []
         ]
     },
     {
@@ -944,6 +926,31 @@
         "wires": [
             [
                 "d9c8bade.ae5d88"
+            ]
+        ]
+    },
+    {
+        "id": "c51b2a98.215bd8",
+        "type": "debug",
+        "z": "ea3277a.93ccf08",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 879.8833312988281,
+        "y": 484.8833312988281,
+        "wires": []
+    },
+    {
+        "id": "394e4263.b4470e",
+        "type": "geo-json",
+        "z": "ea3277a.93ccf08",
+        "name": "",
+        "x": 639.8833312988281,
+        "y": 443.8833312988281,
+        "wires": [
+            [
+                "f8455bb7.07fd48"
             ]
         ]
     }

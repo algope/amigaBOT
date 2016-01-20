@@ -276,6 +276,24 @@
      "enabled": true,
      "module": "node-red",
      "file": "/Users/alejandro/work/amigaBOT/nodes/core/storage/50-file.js"
+    },
+    "geo-json": {
+     "name": "geo-json",
+     "types": [
+      "geo-json"
+     ],
+     "enabled": true,
+     "module": "node-red",
+     "file": "/Users/alejandro/work/amigaBOT/nodes/geo-json.js"
+    },
+    "lower-case": {
+     "name": "lower-case",
+     "types": [
+      "lower-case"
+     ],
+     "enabled": true,
+     "module": "node-red",
+     "file": "/Users/alejandro/work/amigaBOT/nodes/lower-case.js"
     }
    }
   },
