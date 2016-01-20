@@ -257,8 +257,8 @@
         "url": "",
         "number": "",
         "name": "enviarSMS",
-        "x": 2232.8773193359375,
-        "y": 550.7857360839844,
+        "x": 2233.9882202148438,
+        "y": 541.8968811035156,
         "wires": []
     },
     {
@@ -335,7 +335,7 @@
         "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1638.352783203125,
+        "x": 1662.7972412109375,
         "y": 422.2541809082031,
         "wires": [
             [
@@ -374,8 +374,8 @@
         "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=stage+1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1843.0753173828125,
-        "y": 289.94049072265625,
+        "x": 1871.96435546875,
+        "y": 292.1627197265625,
         "wires": [
             [
                 "bf9b24a1.7b84a"
@@ -520,7 +520,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "Telefono",
-        "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\n\n\n\n\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\"WHERE id=\"+id;\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\" WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
         "x": 1650.13525390625,
@@ -629,8 +629,8 @@
         "z": "2667e117.0ef57e",
         "mydb": "5013ee51.ef7ea8",
         "name": "",
-        "x": 2022.88916015625,
-        "y": 484.4722595214844,
+        "x": 2022.8892822265625,
+        "y": 454.4722595214844,
         "wires": [
             [
                 "69559dd5.6eb17c"
@@ -707,14 +707,17 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "GeneraAlerta",
-        "func": "var id = msg.mensaje.from.id;\nvar nombre = msg.mensaje.from.first_name;\nvar lat = msg.position.lat;\nvar lon = msg.position.lon;\nvar apellido = msg.mensaje.from.last_name;\nvar full_address = msg.location.address;\nvar emer_phone = results[0].emer_phone;\n\nvar datos = {id: id, nombre: nombre, apellido: apellido, lat: lat, lon: lon, direccion: full_address};\n\n\n\nvar query = \"INSERT INTO iap.alerts (phone, lat, lon, nombre, apellido, full_address, user_id)\"+ \n            \"VALUES(\"+emer_phone+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"','\"+id+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, datos: datos };\nreturn output;",
+        "func": "var results = msg.payload;\nvar id = msg.mensaje.from.id;\nvar nombre = msg.mensaje.from.first_name;\nvar lat = msg.position.lat;\nvar lon = msg.position.lon;\nvar apellido = msg.mensaje.from.last_name;\nvar full_address = msg.location.address;\nvar emer_phone = results[0].emer_phone;\n\nvar datos = {id: id, nombre: nombre, apellido: apellido, lat: lat, lon: lon, direccion: full_address, tel: emer_phone};\n\n\n\nvar query = \"INSERT INTO iap.alerts (phone, lat, lon, nombre, apellido, full_address, user_id)\"+ \n            \"VALUES(\"+emer_phone+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"','\"+id+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, datos: datos };\nreturn output;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1641.3890380859375,
-        "y": 496.916748046875,
+        "x": 1663.611328125,
+        "y": 498.0278625488281,
         "wires": [
             [
-                "91fee6d2.bad438"
+                "bf9b24a1.7b84a",
+                "ca6454fe.c123a",
+                "4d96dff3.07c7f8",
+                "b8e5a06b.5f282"
             ]
         ]
     },
@@ -889,7 +892,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "BuscaDirección",
-        "func": "var id = msg.payload.chat_id\nvar query = \"SELECT first_name, last_name, lat, lon, full_address, emer_phone FROM iap.local, iap.users WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "func": "var id = msg.payload.chat_id\nvar query = \"SELECT first_name, last_name, lat, lon, full_address, emer_phone FROM iap.local loc, iap.users us WHERE loc.id=\"+id+\" AND us.id=\"+id;\nvar output = {mensaje:msg.mensaje, position: msg.position, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
         "x": 1194.111572265625,
@@ -943,8 +946,8 @@
         "port": "465",
         "name": "amigabotalerts@gmail.com",
         "dname": "enviarEmail",
-        "x": 2234.77197265625,
-        "y": 583.7721862792969,
+        "x": 2235.8828735351562,
+        "y": 574.8833312988281,
         "wires": []
     },
     {
@@ -955,8 +958,8 @@
         "device": "",
         "title": "",
         "priority": 0,
-        "x": 2221.7720336914062,
-        "y": 517.7721862792969,
+        "x": 2222.8829345703125,
+        "y": 508.8833312988281,
         "wires": []
     },
     {
@@ -964,11 +967,11 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "push",
-        "func": "var topic = \"NUEVA ALERTA\";\nvar nombre = \nvar apellidos =\nvar ubicacion =\nvar lat =\nvar lon = \nvar payload = \"Nueva Alerta Generada: \\n\"+\n              \">ID: \\n\"+\n              \">Nombre: \\n\"+\n              \">Apellidos: \\n\"+\n              \">Ubicación: \\n\"+\n              \">Latitud: \\n\"+\n              \">Longitud: \\n\";\n              \n\n\n\nreturn msg;",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address:\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Nueva Alerta Generada: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
         "outputs": 1,
-        "noerr": 10,
-        "x": 2021.772216796875,
-        "y": 517.7721862792969,
+        "noerr": 0,
+        "x": 2028.438720703125,
+        "y": 508.8833312988281,
         "wires": [
             [
                 "2477ed43.8b8162"
@@ -980,11 +983,11 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "sms",
-        "func": "\nreturn msg;",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address:\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Hola, alguien se encuentra en apuros: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2021.7721252441406,
-        "y": 550.7721557617188,
+        "x": 2028.4386291503906,
+        "y": 541.88330078125,
         "wires": [
             [
                 "b2ef3382.8f5ee"
@@ -996,11 +999,11 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "email",
-        "func": "\nreturn msg;",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address:\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Nueva Alerta Generada: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2021.7721252441406,
-        "y": 583.7721557617188,
+        "x": 2028.4386291503906,
+        "y": 574.88330078125,
         "wires": [
             [
                 "9a6b230e.9421f"
@@ -1015,8 +1018,8 @@
         "active": false,
         "console": "true",
         "complete": "true",
-        "x": 2222.772216796875,
-        "y": 484.772216796875,
+        "x": 2217.2169189453125,
+        "y": 454.772216796875,
         "wires": []
     },
     {
@@ -1050,14 +1053,17 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "GeneraAlerta",
-        "func": "var results = msg.payload;\n\nvar id = results[0].id;\nvar nombre = results[0].first_name;\nvar lat = results[0].lat;\nvar lon = results[0].lon;\nvar apellido = results[0].last_name;\nvar full_address = results[0].full_address;\nvar emer_phone = results[0].emer_phone;\n\nvar datos = {id: id, nombre: nombre, apellido: apellido, lat: lat, lon: lon, direccion: full_address};\n\n\n\nvar query = \"INSERT INTO iap.alerts (phone, lat, lon, nombre, apellido, full_address, user_id)\"+ \n            \"VALUES(\"+emer_phone+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"','\"+id+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, datos: datos };\nreturn output;\n\nreturn msg;",
+        "func": "var results = msg.payload;\n\nvar id = results[0].id;\nvar nombre = results[0].first_name;\nvar lat = results[0].lat;\nvar lon = results[0].lon;\nvar apellido = results[0].last_name;\nvar full_address = results[0].full_address;\nvar emer_phone = results[0].emer_phone;\n\nvar datos = {id: id, nombre: nombre, apellido: apellido, lat: lat, lon: lon, direccion: full_address, tel: emer_phone};\n\n\n\nvar query = \"INSERT INTO iap.alerts (phone, lat, lon, nombre, apellido, full_address, user_id)\"+ \n            \"VALUES(\"+emer_phone+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"','\"+id+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, datos: datos };\nreturn output;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1642.0927734375,
-        "y": 528.75927734375,
+        "x": 1664.3150634765625,
+        "y": 529.8703918457031,
         "wires": [
             [
-                "91fee6d2.bad438"
+                "bf9b24a1.7b84a",
+                "ca6454fe.c123a",
+                "4d96dff3.07c7f8",
+                "b8e5a06b.5f282"
             ]
         ]
     },
@@ -1066,7 +1072,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "BuscaTel",
-        "func": "var id = msg.payload.chat_id\nvar query = \"SELECT emer_phone FROM iap.users WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "func": "var id = msg.mensaje.from.id;\nvar query = \"SELECT emer_phone FROM iap.users WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, position: msg.position, location:msg.location, stage:msg.stage, topic: query};\nreturn output;",
         "outputs": 1,
         "noerr": 0,
         "x": 1350.6851196289062,
@@ -1090,17 +1096,5 @@
                 "d9c8bade.ae5d88"
             ]
         ]
-    },
-    {
-        "id": "91fee6d2.bad438",
-        "type": "debug",
-        "z": "2667e117.0ef57e",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "datos",
-        "x": 1836.5370347764756,
-        "y": 516.5370347764757,
-        "wires": []
     }
 ]
