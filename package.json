@@ -58,6 +58,7 @@
     "node-red-node-feedparser": "0.1.*",
     "node-red-node-google": "^0.1.0",
     "node-red-node-mysql": "0.0.7",
+    "node-red-node-pushover": "0.0.6",
     "node-red-node-rbe": "0.1.*",
     "node-red-node-twilio": "0.0.8",
     "node-red-node-twitter": "0.1.*",

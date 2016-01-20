@@ -471,6 +471,21 @@
      "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-twilio/56-twilio.js"
     }
    }
+  },
+  "node-red-node-pushover": {
+   "name": "node-red-node-pushover",
+   "version": "0.0.6",
+   "nodes": {
+    "pushover": {
+     "name": "pushover",
+     "types": [
+      "pushover"
+     ],
+     "enabled": true,
+     "module": "node-red-node-pushover",
+     "file": "/Users/alejandro/work/amigaBOT/node_modules/node-red-node-pushover/57-pushover.js"
+    }
+   }
   }
  }
 }
