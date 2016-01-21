@@ -967,7 +967,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "push",
-        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address:\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Nueva Alerta Generada: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address;\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Nueva Alerta Generada: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
         "outputs": 1,
         "noerr": 0,
         "x": 2028.438720703125,
@@ -983,15 +983,13 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "sms",
-        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address:\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Hola, alguien se encuentra en apuros: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address;\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Hola, alguien se encuentra en apuros: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
         "outputs": 1,
         "noerr": 0,
         "x": 2028.4386291503906,
         "y": 541.88330078125,
         "wires": [
-            [
-                "b2ef3382.8f5ee"
-            ]
+            []
         ]
     },
     {
@@ -999,7 +997,7 @@
         "type": "function",
         "z": "2667e117.0ef57e",
         "name": "email",
-        "func": "\nreturn msg;",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.full_address;\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar payload = \"Nueva Alerta Generada: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
         "outputs": 1,
         "noerr": 0,
         "x": 2028.4386291503906,
