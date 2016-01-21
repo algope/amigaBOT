@@ -1,0 +1,1098 @@
+[
+    {
+        "type": "tab",
+        "id": "2667e117.0ef57e",
+        "label": "GestBOT"
+    },
+    {
+        "type": "tab",
+        "id": "ea3277a.93ccf08",
+        "label": "PublicaGeoJSON"
+    },
+    {
+        "id": "b12972e2.ab5a7",
+        "type": "subflow",
+        "name": "GestUsuarios",
+        "info": "",
+        "in": [
+            {
+                "x": 41,
+                "y": 90,
+                "wires": [
+                    {
+                        "id": "7441792b.f2325"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 909,
+                "y": 239,
+                "wires": [
+                    {
+                        "id": "20bcc1d4.135476",
+                        "port": 0
+                    },
+                    {
+                        "id": "36da8566.d99882",
+                        "port": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "2acbd3e8.812b5c",
+        "type": "MySQLdatabase",
+        "z": "",
+        "host": "iap.c8rqb14cuaul.us-east-1.rds.amazonaws.com",
+        "port": "3306",
+        "db": "iap",
+        "tz": ""
+    },
+    {
+        "id": "119f3582.9e58ca",
+        "type": "twilio-api",
+        "z": "2667e117.0ef57e",
+        "sid": "AC207e5fb1f8e7ea3d45e516f8c362c6fe",
+        "from": "+34986080463",
+        "name": ""
+    },
+    {
+        "id": "b2b1b72f.adb8d8",
+        "type": "google-api-config",
+        "z": "2667e117.0ef57e"
+    },
+    {
+        "id": "5013ee51.ef7ea8",
+        "type": "MySQLdatabase",
+        "z": "2667e117.0ef57e",
+        "host": "iap.c8rqb14cuaul.us-east-1.rds.amazonaws.com",
+        "port": "3306",
+        "db": "iap",
+        "tz": ""
+    },
+    {
+        "id": "77182b8a.32db3c",
+        "type": "http in",
+        "z": "2667e117.0ef57e",
+        "name": "Nuevo Mensaje",
+        "url": "/update",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 96.9285888671875,
+        "y": 298.28570556640625,
+        "wires": [
+            [
+                "74e003be.bf6344",
+                "2bc055ca.0fa9f2"
+            ]
+        ]
+    },
+    {
+        "id": "74e003be.bf6344",
+        "type": "http response",
+        "z": "2667e117.0ef57e",
+        "name": "RESP: 200 OK",
+        "x": 290.90472412109375,
+        "y": 210.80955505371094,
+        "wires": []
+    },
+    {
+        "id": "17553984.fad286",
+        "type": "inject",
+        "z": "2667e117.0ef57e",
+        "name": "Mensaje Prueba",
+        "topic": "Telegram message",
+        "payload": "{ \"update_id\": 870360732, \"message\": { \"message_id\": 32, \"from\": { \"id\": 10836823, \"first_name\": \"Alejandro\", \"username\": \"algope\" }, \"chat\": { \"id\": 108416823, \"first_name\": \"Alejandro\", \"username\": \"algope\", \"type\": \"private\" }, \"date\": 1450438731 , \"text\": \"Calle Castán Tobeñas, 55, Valencia\", \"location\": 123} }",
+        "payloadType": "string",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 119.92861938476562,
+        "y": 706.7142333984375,
+        "wires": [
+            [
+                "39dd5d91.012faa"
+            ]
+        ]
+    },
+    {
+        "id": "39dd5d91.012faa",
+        "type": "json",
+        "z": "2667e117.0ef57e",
+        "name": "msg TO json",
+        "x": 123.42855834960938,
+        "y": 598.7142333984375,
+        "wires": [
+            [
+                "2bc055ca.0fa9f2"
+            ]
+        ]
+    },
+    {
+        "id": "425d6f3.bbc9c1",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "Procesar Comandos",
+        "property": "text",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "/start"
+            },
+            {
+                "t": "eq",
+                "v": "/registro"
+            },
+            {
+                "t": "eq",
+                "v": "/emergencia"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 4,
+        "x": 565.5716552734375,
+        "y": 285.0476989746094,
+        "wires": [
+            [
+                "1fff98b8.ef58b7"
+            ],
+            [
+                "8dfd7f60.95bb6"
+            ],
+            [
+                "9aff465c.efb3d"
+            ],
+            [
+                "fef0675e.f4637"
+            ]
+        ]
+    },
+    {
+        "id": "1e13b1d4.2bf726",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "Stage?",
+        "property": "stage",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0"
+            },
+            {
+                "t": "eq",
+                "v": "1"
+            },
+            {
+                "t": "eq",
+                "v": "2"
+            },
+            {
+                "t": "eq",
+                "v": "3"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 4,
+        "x": 272.17462158203125,
+        "y": 449.7301330566406,
+        "wires": [
+            [
+                "740fedd.c349314"
+            ],
+            [
+                "9f129102.db316"
+            ],
+            [
+                "7538205d.32fe9"
+            ],
+            [
+                "4242c002.f5b1d8"
+            ]
+        ]
+    },
+    {
+        "id": "bca8bffa.1ecc8",
+        "type": "http request",
+        "z": "2667e117.0ef57e",
+        "name": "Respuesta",
+        "method": "POST",
+        "ret": "txt",
+        "url": "https://api.telegram.org/bot163966266:AAG725aiRHk-34lVP-O7tL-zEAXYQM2vNtI/sendMessage",
+        "x": 1183.4447021484375,
+        "y": 651.3334350585938,
+        "wires": [
+            [
+                "456d8cb9.8350b4"
+            ]
+        ]
+    },
+    {
+        "id": "1fff98b8.ef58b7",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/start",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\"+\n            \"Para empezar, registrate pulsando sobre el comando: /registro .\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 858.9884643554688,
+        "y": 260.1787109375,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "b2ef3382.8f5ee",
+        "type": "twilio out",
+        "z": "2667e117.0ef57e",
+        "twilio": "119f3582.9e58ca",
+        "twilioType": "sms",
+        "url": "",
+        "number": "",
+        "name": "enviarSMS",
+        "x": 2233.9882202148438,
+        "y": 541.8968811035156,
+        "wires": []
+    },
+    {
+        "id": "8dfd7f60.95bb6",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/registro",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para registrarte, primero indícame cuál es tu dirección completa: \"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 855.365478515625,
+        "y": 292.13104248046875,
+        "wires": [
+            [
+                "bca8bffa.1ecc8",
+                "81aca8be.c1b95"
+            ]
+        ]
+    },
+    {
+        "id": "fef0675e.f4637",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 859.25048828125,
+        "y": 357.3056945800781,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "9aff465c.efb3d",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/emergencia",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Para poder notificar de una emergencia, primero necesito que te registres. Pulsa sobre /registro\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 844.1390991210938,
+        "y": 324.1945495605469,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "20bdb9af.cc0ca6",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Dirección",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, ahora dime a qué número de teléfono movil quieres que avisemos en caso de emergencia: \"\nvar local = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{address:local}, mensaje: msg.mensaje};\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 851.7344360351562,
+        "y": 390.27392578125,
+        "wires": [
+            [
+                "bca8bffa.1ecc8",
+                "a5020c94.6cf7f8"
+            ]
+        ]
+    },
+    {
+        "id": "fcff0761.e11638",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Localización",
+        "func": "var id = msg.mensaje.from.id;\nvar lat = msg.location.lat;\nvar lon = msg.location.lon;\nvar full_address = msg.mensaje.text;\n\nvar query = \"INSERT INTO iap.local (id, lat, lon, full_address)\"+ \n            \" VALUES(\"+id+\",'\"+lat+\"','\"+lon+\"','\"+full_address+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1662.7972412109375,
+        "y": 422.2541809082031,
+        "wires": [
+            [
+                "bf9b24a1.7b84a",
+                "81aca8be.c1b95"
+            ]
+        ]
+    },
+    {
+        "id": "a5020c94.6cf7f8",
+        "type": "google geocoding",
+        "z": "2667e117.0ef57e",
+        "name": "Geocodificación",
+        "geocodeBy": "address",
+        "address": "",
+        "lat": "",
+        "lon": "",
+        "googleAPI": "b2b1b72f.adb8d8",
+        "bounds": "",
+        "language": "",
+        "region": "",
+        "components": "",
+        "x": 1194.3651123046875,
+        "y": 420.7657165527344,
+        "wires": [
+            [
+                "fcff0761.e11638"
+            ]
+        ]
+    },
+    {
+        "id": "81aca8be.c1b95",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "AEtapa",
+        "func": "var id = msg.mensaje.from.id\n\n\nvar query = \"UPDATE iap.users SET stage=stage+1 WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, };\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1871.96435546875,
+        "y": 292.1627197265625,
+        "wires": [
+            [
+                "bf9b24a1.7b84a"
+            ]
+        ]
+    },
+    {
+        "id": "740fedd.c349314",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "stage0",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 420,
+        "y": 401.90484619140625,
+        "wires": [
+            [
+                "425d6f3.bbc9c1"
+            ],
+            [
+                "fef0675e.f4637"
+            ]
+        ]
+    },
+    {
+        "id": "9f129102.db316",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "stage1",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 420.00018310546875,
+        "y": 434.761962890625,
+        "wires": [
+            [
+                "20bdb9af.cc0ca6"
+            ],
+            [
+                "7deac5b9.366564"
+            ]
+        ]
+    },
+    {
+        "id": "7538205d.32fe9",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "stage2",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "text"
+            },
+            {
+                "t": "eq",
+                "v": "location"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 420.0001220703125,
+        "y": 467.6191101074219,
+        "wires": [
+            [
+                "8483c550.90b128"
+            ],
+            [
+                "4ecb7f1d.4d719"
+            ]
+        ]
+    },
+    {
+        "id": "4242c002.f5b1d8",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "stage3",
+        "property": "type",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "location"
+            },
+            {
+                "t": "eq",
+                "v": "text"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 421.42877197265625,
+        "y": 501.90484619140625,
+        "wires": [
+            [
+                "14cd6210.60751e"
+            ],
+            [
+                "50a27a2a.d5c564"
+            ]
+        ]
+    },
+    {
+        "id": "8483c550.90b128",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Teléfono",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Perfecto, tu registro se ha completado.\\n \"+\n            \"A partir de ahora, si te encuentras en peligro, simplemente, pulsa sobre el comando /emergencia o envía la ubicación de dónde te encuentres\"\nvar tel = msg.mensaje.text;\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, telefono:tel, mensaje: msg.mensaje};\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 857.35400390625,
+        "y": 453.74224853515625,
+        "wires": [
+            [
+                "6531b023.fd4d88",
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "6531b023.fd4d88",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Telefono",
+        "func": "var id = msg.mensaje.from.id;\nvar tel = msg.telefono;\nvar query = \"UPDATE iap.users SET emer_phone=\"+tel+\" WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1650.13525390625,
+        "y": 455.2023620605469,
+        "wires": [
+            [
+                "bf9b24a1.7b84a",
+                "81aca8be.c1b95"
+            ]
+        ]
+    },
+    {
+        "id": "50a27a2a.d5c564",
+        "type": "switch",
+        "z": "2667e117.0ef57e",
+        "name": "Procesar Comandos",
+        "property": "text",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "/start"
+            },
+            {
+                "t": "eq",
+                "v": "/registro"
+            },
+            {
+                "t": "eq",
+                "v": "/emergencia"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 4,
+        "x": 562.6668090820312,
+        "y": 626.6668701171875,
+        "wires": [
+            [
+                "70cbfe2.6a9c6"
+            ],
+            [
+                "c90ac6cb.2b8278"
+            ],
+            [
+                "9b34b5ba.288838"
+            ],
+            [
+                "bb268127.19cd38"
+            ]
+        ]
+    },
+    {
+        "id": "70cbfe2.6a9c6",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/start",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Hola \"+nombre+\". Bienvenidx a amigaBOT.\\n\"+\n            \"Estoy aquí para ayudarte en tus momentos más dificiles. Me aseguraré de que la ayuda llega cuando más lo necesites.\\n\"+\n            \"Si necesitas ayuda, pulsa sobre el comando /emergencia o envía tu localización si no estás en casa.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 862.1946411132812,
+        "y": 551.5834045410156,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "c90ac6cb.2b8278",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/registro",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Tu registro ha sido completado. No necesitas hacer nada más.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 858.028076171875,
+        "y": 584.2221984863281,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "9b34b5ba.288838",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "/emergencia",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"La ayuda está en camino.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 845.250244140625,
+        "y": 616.4445495605469,
+        "wires": [
+            [
+                "bca8bffa.1ecc8",
+                "f765b963.d85ec"
+            ]
+        ]
+    },
+    {
+        "id": "bf9b24a1.7b84a",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 2022.8892822265625,
+        "y": 454.4722595214844,
+        "wires": [
+            [
+                "69559dd5.6eb17c"
+            ]
+        ]
+    },
+    {
+        "id": "bb268127.19cd38",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 861.5001831054688,
+        "y": 648.7501525878906,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "7deac5b9.366564",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860.2503051757812,
+        "y": 422.0834045410156,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "4ecb7f1d.4d719",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "error",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"Vaya, eso no lo esperaba. Revisa que no te hayas equivocado.\"\n\nmsg.payload = { chat_id: id, text: texto }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 863.58349609375,
+        "y": 485.4167785644531,
+        "wires": [
+            [
+                "bca8bffa.1ecc8"
+            ]
+        ]
+    },
+    {
+        "id": "14cd6210.60751e",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "Localización",
+        "func": "var id=msg.mensaje.from.id;\nvar nombre=msg.mensaje.from.first_name\nvar texto = \"La ayuda está en camino.\";\nvar lat = msg.mensaje.location.latitude;\nvar lon = msg.mensaje.location.longitude;\n\nvar resp = { chat_id: id, text: texto };\n\nvar res ={payload:resp, location:{lat: lat, lon:lon}, position:{lat: lat, lon:lon}, mensaje: msg.mensaje};\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 847.3335571289062,
+        "y": 518.3333435058594,
+        "wires": [
+            [
+                "bca8bffa.1ecc8",
+                "df4905fa.3d9628"
+            ]
+        ]
+    },
+    {
+        "id": "d9c8bade.ae5d88",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "GeneraAlerta",
+        "func": "var results = msg.payload;\nvar id = msg.mensaje.from.id;\nvar nombre = msg.mensaje.from.first_name;\nvar lat = msg.position.lat;\nvar lon = msg.position.lon;\nvar apellido = msg.mensaje.from.last_name;\nvar full_address = msg.location.address;\nvar emer_phone = results[0].emer_phone;\n\nvar datos = {id: id, nombre: nombre, apellido: apellido, lat: lat, lon: lon, direccion: full_address, tel: emer_phone};\n\n\n\nvar query = \"INSERT INTO iap.alerts (phone, lat, lon, nombre, apellido, full_address, user_id)\"+ \n            \"VALUES(\"+emer_phone+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"','\"+id+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, datos: datos };\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1663.611328125,
+        "y": 498.0278625488281,
+        "wires": [
+            [
+                "bf9b24a1.7b84a",
+                "ca6454fe.c123a",
+                "4d96dff3.07c7f8",
+                "b8e5a06b.5f282"
+            ]
+        ]
+    },
+    {
+        "id": "e10c4b23.75556",
+        "type": "mysql",
+        "z": "b12972e2.ab5a7",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 218.92868041992188,
+        "y": 233,
+        "wires": [
+            [
+                "5f519534.d2b874"
+            ]
+        ]
+    },
+    {
+        "id": "7441792b.f2325",
+        "type": "function",
+        "z": "b12972e2.ab5a7",
+        "name": "BuscaUsuario",
+        "func": "var query = \"SELECT id, stage, first_name, last_name, username FROM iap.users WHERE id=\"+msg.payload.message.from.id;\nvar output = {payload: msg.payload, mensaje:msg.payload.message, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 155.5,
+        "y": 126,
+        "wires": [
+            [
+                "e10c4b23.75556"
+            ]
+        ]
+    },
+    {
+        "id": "36da8566.d99882",
+        "type": "switch",
+        "z": "b12972e2.ab5a7",
+        "name": "",
+        "property": "queryRes",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 461.7857360839844,
+        "y": 233,
+        "wires": [
+            [
+                "16a501.3e6713"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "16a501.3e6713",
+        "type": "function",
+        "z": "b12972e2.ab5a7",
+        "name": "Crear Usuario",
+        "func": "var id = msg.mensaje.from.id\nvar nombre = \"\";\nvar apellido = \"\";\nvar usuario = \"\";\nif('first_name' in msg.mensaje.from){\n    nombre = msg.mensaje.from.first_name;\n}else{\n    nombre = null;\n}\nif('last_name' in msg.mensaje.from){\n    apellido = msg.mensaje.from.last_name;\n}else{\n    apellido = null;\n}\nif('username' in msg.mensaje.from){\n    usuario = msg.mensaje.from.username;\n}else usuario = null;\n\n\nvar query = \"INSERT INTO iap.users (id,stage,first_name, last_name, username)\"+ \n            \" VALUES(\"+id+\",0,'\"+nombre+\"','\"+apellido+\"','\"+usuario+\"');\";\nvar output = {mensaje:msg.mensaje, stage:msg.stage, text:msg.text, type: msg.type,  topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 615.7857360839844,
+        "y": 189.00003051757812,
+        "wires": [
+            [
+                "20bcc1d4.135476"
+            ]
+        ]
+    },
+    {
+        "id": "20bcc1d4.135476",
+        "type": "mysql",
+        "z": "b12972e2.ab5a7",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 760.7857360839844,
+        "y": 189.00003051757812,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f519534.d2b874",
+        "type": "function",
+        "z": "b12972e2.ab5a7",
+        "name": "setPayload",
+        "func": "var results = msg.payload;\nvar update = msg.mensaje;\nvar res = null;\nvar output=null;\nvar type = null;\nvar estado = 0;\n\n\nif(results.length>0){\n    output=results[0].id;\n    estado=results[0].stage;\n}\n\nif(update.text){\n    var mensaje = update.text;\n    type = \"text\";\n    res = {\n        text     : mensaje, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n\n}\nelse if(update.location){\n    var loc = update.location;\n    type = \"location\";\n    res = {\n        location : loc, \n        stage    : estado, \n        type     : type, \n        mensaje  : msg.mensaje, \n        queryRes : output\n        \n    };\n}\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 338.6429138183594,
+        "y": 233,
+        "wires": [
+            [
+                "36da8566.d99882"
+            ]
+        ]
+    },
+    {
+        "id": "2bc055ca.0fa9f2",
+        "type": "subflow:b12972e2.ab5a7",
+        "z": "2667e117.0ef57e",
+        "x": 117.33331298828125,
+        "y": 448.6666259765625,
+        "wires": [
+            [
+                "1e13b1d4.2bf726"
+            ]
+        ]
+    },
+    {
+        "id": "216fd9a7.12b28e",
+        "type": "http in",
+        "z": "ea3277a.93ccf08",
+        "name": "",
+        "url": "/alertas",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 121.35501098632812,
+        "y": 475.54541015625,
+        "wires": [
+            [
+                "796f6ced.a54cb4"
+            ]
+        ]
+    },
+    {
+        "id": "796f6ced.a54cb4",
+        "type": "function",
+        "z": "ea3277a.93ccf08",
+        "name": "BuscaAlertas",
+        "func": "var query = \"SELECT * FROM iap.alerts ;\";\nvar output = {payload: msg.payload, req:msg.req, res:msg.res, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 306.435791015625,
+        "y": 421.8182067871094,
+        "wires": [
+            [
+                "229e56c.b89cb2a"
+            ]
+        ]
+    },
+    {
+        "id": "f8455bb7.07fd48",
+        "type": "http response",
+        "z": "ea3277a.93ccf08",
+        "name": "Resp 200OK",
+        "x": 789.855712890625,
+        "y": 476.63775634765625,
+        "wires": []
+    },
+    {
+        "id": "229e56c.b89cb2a",
+        "type": "mysql",
+        "z": "ea3277a.93ccf08",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 463.23236083984375,
+        "y": 421.6017150878906,
+        "wires": [
+            [
+                "394e4263.b4470e"
+            ]
+        ]
+    },
+    {
+        "id": "f765b963.d85ec",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "BuscaDirección",
+        "func": "var id = msg.payload.chat_id\nvar query = \"SELECT first_name, last_name, lat, lon, full_address, emer_phone FROM iap.local loc, iap.users us WHERE loc.id=\"+id+\" AND us.id=\"+id;\nvar output = {mensaje:msg.mensaje, position: msg.position, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1194.111572265625,
+        "y": 533.8888549804688,
+        "wires": [
+            [
+                "9236ab50.3310e8"
+            ]
+        ]
+    },
+    {
+        "id": "df4905fa.3d9628",
+        "type": "google geocoding",
+        "z": "2667e117.0ef57e",
+        "name": "Geocodificación",
+        "geocodeBy": "coordinates",
+        "address": "",
+        "lat": "",
+        "lon": "",
+        "googleAPI": "b2b1b72f.adb8d8",
+        "bounds": "",
+        "language": "",
+        "region": "",
+        "components": "",
+        "x": 1194.861083984375,
+        "y": 493.33331298828125,
+        "wires": [
+            [
+                "c0c96ad1.a4163"
+            ]
+        ]
+    },
+    {
+        "id": "394e4263.b4470e",
+        "type": "geo-json",
+        "z": "ea3277a.93ccf08",
+        "name": "",
+        "x": 604.32763671875,
+        "y": 421.6611022949219,
+        "wires": [
+            [
+                "f8455bb7.07fd48"
+            ]
+        ]
+    },
+    {
+        "id": "9a6b230e.9421f",
+        "type": "e-mail",
+        "z": "2667e117.0ef57e",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "name": "amigabotalerts@gmail.com",
+        "dname": "enviarEmail",
+        "x": 2235.8828735351562,
+        "y": 574.8833312988281,
+        "wires": []
+    },
+    {
+        "id": "2477ed43.8b8162",
+        "type": "pushover",
+        "z": "2667e117.0ef57e",
+        "name": "Policia",
+        "device": "",
+        "title": "",
+        "priority": 0,
+        "x": 2222.8829345703125,
+        "y": 508.8833312988281,
+        "wires": []
+    },
+    {
+        "id": "ca6454fe.c123a",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "push",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.direccion;\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar tel = msg.datos.tel;\n\n        \nvar payload = { alerta: {\n                  id: id,\n                  nombre: nombre,\n                  apellidos: apellidos,\n                  ubicacion: ubicacion,\n                  lat: lat,\n                  lon: lon,\n                  tel: tel\n                }\n          };\n    \n            \n              \nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2028.438720703125,
+        "y": 508.8833312988281,
+        "wires": [
+            [
+                "2477ed43.8b8162"
+            ]
+        ]
+    },
+    {
+        "id": "4d96dff3.07c7f8",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "sms",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.direccion;\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar tel = msg.datos.tel;\nvar payload = \"Hola, alguien se encuentra en apuros: \\n\"+\n              \">ID: \"+id+\" \\n\"+\n              \">Nombre: \"+nombre+\" \\n\"+\n              \">Apellidos: \"+apellidos+\" \\n\"+\n              \">Ubicación: \"+ubicacion+\"\\n\"+\n              \">Latitud: \"+lat+\"\\n\"+\n              \">Longitud: \"+lon+\"\\n\";\n              \n\nvar res = {msg:msg.mensaje, payload:payload, topic:tel };\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2028.4386291503906,
+        "y": 541.88330078125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b8e5a06b.5f282",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "email",
+        "func": "var topic = \"NUEVA ALERTA\";\nvar id = msg.datos.id;\nvar nombre = msg.datos.nombre;\nvar apellidos = msg.datos.apellido;\nvar ubicacion = msg.datos.direccion;\nvar lat = msg.datos.lat;\nvar lon = msg.datos.lon;\nvar tel = msg.datos.tel;\nvar payload = \n'<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\"> <html> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>Simples-Minimalistic Responsive Template</title> <style type=\"text/css\"> /* Client-specific Styles */ #outlook a {padding:0;} /* Force Outlook to provide a \"view in browser\" menu link. */ body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;} /* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */ .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */ .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.*/ #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;} img {outline:none; text-decoration:none;border:none; -ms-interpolation-mode: bicubic;} a img {border:none;} .image_fix {display:block;} p {margin: 0px 0px !important;} table td {border-collapse: collapse;} table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; } a {color: #0a8cce;text-decoration: none;text-decoration:none!important;} /*STYLES*/ table[class=full] { width: 100%; clear: both; } /*IPAD STYLES*/ @media only screen and (max-width: 640px) { a[href^=\"tel\"], a[href^=\"sms\"] { text-decoration: none; color: #0a8cce; /* or whatever your want */ pointer-events: none; cursor: default; } .mobile_link a[href^=\"tel\"], .mobile_link a[href^=\"sms\"] { text-decoration: default; color: #0a8cce !important; pointer-events: auto; cursor: default; } table[class=devicewidth] {width: 440px!important;text-align:center!important;} table[class=devicewidthinner] {width: 420px!important;text-align:center!important;} img[class=banner] {width: 440px!important;height:220px!important;} img[class=colimg2] {width: 440px!important;height:220px!important;} } /*IPHONE STYLES*/ @media only screen and (max-width: 480px) { a[href^=\"tel\"], a[href^=\"sms\"] { text-decoration: none; color: #0a8cce; /* or whatever your want */ pointer-events: none; cursor: default; } .mobile_link a[href^=\"tel\"], .mobile_link a[href^=\"sms\"] { text-decoration: default; color: #0a8cce !important; pointer-events: auto; cursor: default; } table[class=devicewidth] {width: 280px!important;text-align:center!important;} table[class=devicewidthinner] {width: 260px!important;text-align:center!important;} img[class=banner] {width: 280px!important;height:140px!important;} img[class=colimg2] {width: 280px!important;height:140px!important;} } </style> </head> <body> <!-- Start of preheader --> <!-- End of preheader --> <!-- Start of header --> <!-- End of Header --> <!-- Start of main-banner --> <!-- End of main-banner --> <!-- Start Full Text --> <!-- end of full text --> <!-- Start of separator --> <!-- End of separator --> <!-- 3 Start of Columns --> <!-- end of 3 Columns --> <!-- Start of separator --> <!-- End of separator --> <!-- 2columns --> <!-- end of 2 columns --> <!-- Start of separator --> <!-- End of separator --> <!-- Start Full Text --> <!-- end of full text --> <!-- Start of separator --> <!-- End of separator --> <!-- Start of Postfooter --> <!-- End of postfooter --> <table id=\"backgroundTable\" st-sortable=\"full-text\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tbody><tr> <td> <table hasbackground=\"true\" class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody><tr> <td width=\"100%\"> <table class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody> <!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"20\"> </td> </tr> <!-- Spacing --><tr> <td> <table class=\"devicewidthinner\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"560\"><tbody> <!-- Title --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 30px; color: #333333; text-align:center; line-height: 30px;\" st-title=\"fulltext-heading\"> <p> Alguien esta en apuros </p> </td> </tr> <!-- End of Title --><!-- spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"20\" width=\"100%\"> </td> </tr> <!-- End of spacing --><!-- content --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #666666; text-align:center; line-height: 30px;\" st-content=\"fulltext-content\"> <p> Parece que alguien esta en apuros, por favor, revisa los detalles a continuación y ponte en contacto cuanto antes. </p> </td> </tr> <!-- End of content --> </tbody></table> </td> </tr> <!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"20\"> </td> </tr> <!-- Spacing --> </tbody></table> </td> </tr></tbody></table> </td> </tr></tbody></table> <table id=\"backgroundTable\" st-sortable=\"separator\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tbody><tr> <td> <table hasbackground=\"true\" class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"30\" align=\"center\"> </td> </tr> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"1\" align=\"center\" bgcolor=\"#d1d1d1\" width=\"550\"> </td> </tr> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"30\" align=\"center\"> </td> </tr> </tbody></table> </td> </tr></tbody></table> <table id=\"backgroundTable\" st-sortable=\"3-images+text-columns\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tbody><tr> <td> <table hasbackground=\"true\" class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody><tr> <td width=\"100%\"> <table class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody><tr> <td> <!-- col 1 --> <table class=\"devicewidth\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"186\"><tbody> <!-- image 2 --><tr> <td class=\"devicewidth\" height=\"50\" align=\"center\" width=\"50\"> <div class=\"imgpop\"> <img id=\"88hnhdud94\" src=\"https://cdn3.iconfinder.com/data/icons/black-easy/512/538642-user_512x512.png\" alt=\"\" st-image=\"icon1\" style=\"display:block; border:none; outline:none; text-decoration:none;\" height=\"50\" border=\"0\" width=\"50\"> </div> </td> </tr> <!-- end of image2 --><tr> <td> <!-- start of text content table --> <table class=\"devicewidthinner\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"186\"><tbody> <!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- title2 --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 18px; color: #666666; text-align:center; line-height: 24px;\" st-title=\"3col-title1\"> <p> <strong>ID</strong> </p> </td> </tr> <!-- end of title2 --><!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- content2 --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #889098; text-align:center; line-height: 24px;\" st-content=\"3col-content1\"> <p> '+id+' </p> </td> </tr> <!-- end of content2 --><!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- read more --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #0a8cd8; text-align:center; line-height: 20px;\" st-title=\"3col-readmore1\"> <p> </p> </td> </tr> <!-- end of read more --> </tbody></table> </td> </tr> <!-- end of text content table --> </tbody></table> <!-- spacing --><table class=\"removeMobile\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"20\"><tbody><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr></tbody></table> <!-- end of spacing --><!-- col 2 --><table class=\"devicewidth\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"186\"><tbody> <!-- image 2 --><tr> <td class=\"devicewidth\" height=\"50\" align=\"center\" width=\"50\"> <div class=\"imgpop\"> <img id=\"orem6o6d01h\" src=\"https://cdn3.iconfinder.com/data/icons/black-easy/512/538642-user_512x512.png\" alt=\"\" st-image=\"icon1\" style=\"display:block; border:none; outline:none; text-decoration:none;\" height=\"50\" border=\"0\" width=\"50\"> </div> </td> </tr> <!-- end of image2 --><tr> <td> <!-- start of text content table --> <table class=\"devicewidthinner\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"186\"><tbody> <!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- title2 --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 18px; color: #666666; text-align:center; line-height: 24px;\" st-title=\"3col-title2\"> <p> <strong>NOMBRE</strong> </p> </td> </tr> <!-- end of title2 --><!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- content2 --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #889098; text-align:center; line-height: 24px;\" st-content=\"3col-content2\"> <p> '+nombre+' </p> </td> </tr> <!-- end of content2 --><!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- /Spacing --><!-- read more --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #0a8cd8; text-align:center; line-height: 20px;\" st-title=\"3col-readmore2\"> <p> </p> </td> </tr> <!-- end of read more --> </tbody></table> </td> </tr> <!-- end of text content table --> </tbody></table> <!-- end of col 2 --><!-- spacing --><table class=\"removeMobile\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"1\"><tbody><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr></tbody></table> <!-- end of spacing --><!-- col 3 --><table class=\"devicewidth\" align=\"right\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"186\"><tbody> <!-- image3 --><tr> <td class=\"devicewidth\" height=\"50\" align=\"center\" width=\"50\"> <div class=\"imgpop\"> <img id=\"h0y1mmgxu0t\" src=\"https://cdn3.iconfinder.com/data/icons/black-easy/512/538642-user_512x512.png\" alt=\"\" st-image=\"icon1\" style=\"display:block; border:none; outline:none; text-decoration:none;\" height=\"50\" border=\"0\" width=\"50\"> </div> </td> </tr> <!-- end of image3 --><tr> <td> <!-- start of text content table --> <table class=\"devicewidthinner\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"186\"><tbody> <!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- title --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 18px; color: #666666; text-align:center; line-height: 24px;\" st-title=\"3col-title3\"> <p> <strong>APELLIDOS</strong> </p> </td> </tr> <!-- end of title --><!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- content --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #889098; text-align:center; line-height: 24px;\" st-content=\"3col-content3\"> <p> '+apellidos+' </p> </td> </tr> <!-- end of content --><!-- Spacing --><tr> <td style=\"font-size:1px; line-height:1px; mso-line-height-rule: exactly;\" height=\"15\" width=\"100%\"> </td> </tr> <!-- Spacing --><!-- read more --><tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #0a8cce; text-align:center; line-height: 20px;\" st-title=\"3col-readmore3\"> <p> </p> </td> </tr> <!-- end of read more --> </tbody></table> </td> </tr> <!-- end of text content table --> </tbody></table> </td> <!-- spacing --> <!-- end of spacing --> </tr></tbody></table> </td> </tr></tbody></table> </td> </tr></tbody></table> <table id=\"backgroundTable\" st-sortable=\"separator\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tbody><tr> <td> <table hasbackground=\"true\" class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"30\" align=\"center\"> </td> </tr> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"1\" align=\"center\" bgcolor=\"#d1d1d1\" width=\"550\"> </td> </tr> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"30\" align=\"center\"> </td> </tr> </tbody></table> </td> </tr></tbody></table> <table id=\"backgroundTable\" st-sortable=\"2-images+text-columns\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tbody><tr> <td> <table hasbackground=\"true\" class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody><tr> <td width=\"100%\"> <table class=\"devicewidth\" align=\"center\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody> <tr> <td> <!-- start of left column --> <table class=\"devicewidth\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"290\"><tbody> <!-- Spacing --><tr> <td height=\"20\" width=\"100%\"> </td> </tr> <!-- Spacing --><tr> <td> <!-- start of text content table --> <table class=\"devicewidth\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"290\"><tbody> <!-- image --><tr> <td class=\"devicewidth\" height=\"160\" align=\"center\" width=\"290\"> <div class=\"imgpop\"> <a href=\"https://upload.wikimedia.org/wikipedia/en/1/19/Google_Maps_Icon.png\"><img id=\"jtey1k5gm0s\" src=\"https://upload.wikimedia.org/wikipedia/en/1/19/Google_Maps_Icon.png\" alt=\"\" st-image=\"ipad\" style=\"display:block; border:none; outline:none; text-decoration:none;\" class=\"colimg2\" height=\"160\" border=\"0\" width=\"200\"></a> </div> </td> </tr> <!-- Content --><tr> <td> <table class=\"devicewidthinner\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"270\"><tbody> <tr> <td height=\"20\" width=\"100%\"> </td> </tr> <tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 18px; color: #333333; line-height:24px;text-align:center;\" st-title=\"2coltitle1\"> <p> Latitud y Longitud </p> </td> </tr> <tr> <td height=\"20\" width=\"100%\"> </td> </tr> <tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; line-height:24px; color: #666666; text-align:center;\" st-content=\"2colcontent1\"> <p> Lat: '+lat+' Lon: '+lon+'  </p> </td> </tr> <tr> <td height=\"20\" width=\"100%\"> </td> </tr> <tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #0a8cce; text-align:center;\" st-title=\"2colreadmore1\"> <p> </p> </td> </tr> </tbody></table> </td> </tr> <!-- end of Content --><!-- end of content --> </tbody></table> </td> </tr> <!-- end of text content table --> </tbody></table> <!-- end of left column --><!-- start of right column --><table class=\"devicewidth\" align=\"right\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"290\"><tbody> <!-- Spacing --><tr> <td height=\"20\" width=\"100%\"> </td> </tr> <!-- Spacing --><tr> <td> <!-- start of text content table --> <table class=\"devicewidth\" align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"290\"><tbody> <!-- image --><tr> <td class=\"devicewidth\" height=\"160\" align=\"center\" width=\"290\"> <div class=\"imgpop\"> <a href=\"https://upload.wikimedia.org/wikipedia/en/1/19/Google_Maps_Icon.png\"><img id=\"oc2aas7sf7\" src=\"https://upload.wikimedia.org/wikipedia/en/1/19/Google_Maps_Icon.png\" alt=\"\" st-image=\"ipad\" style=\"display:block; border:none; outline:none; text-decoration:none;\" class=\"colimg2\" height=\"160\" border=\"0\" width=\"200\"></a> </div> </td> </tr> <!-- Content --><tr> <td> <table class=\"devicewidthinner\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"270\"><tbody> <tr> <td height=\"20\" width=\"100%\"> </td> </tr> <tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 18px; color: #333333;line-height:24px; text-align:center;\" st-title=\"2coltitle2\"> <p> Ubicación </p> </td> </tr> <tr> <td height=\"20\" width=\"100%\"> </td> </tr> <tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; line-height:24px; color: #666666; text-align:center;\" st-content=\"2colcontent2\"> <p> '+ubicacion+' </p> </td> </tr> <tr> <td height=\"20\" width=\"100%\"> </td> </tr> <tr> <td style=\"font-family: Helvetica, arial, sans-serif; font-size: 14px; color: #0a8cce; text-align:center;\" st-title=\"2colreadmore2\"> <p> </p> </td> </tr> </tbody></table> </td> </tr> <!-- end of Content --><!-- end of content --> </tbody></table> </td> </tr> <!-- end of text content table --> </tbody></table> <!-- end of right column --> </td> </tr> <!-- Spacing --><tr> <td height=\"10\" width=\"100%\"> </td> </tr> <!-- Spacing --> </tbody></table> </td> </tr></tbody></table> </td> </tr></tbody></table> <table id=\"backgroundTable\" st-sortable=\"separator\" bgcolor=\"#ffffff\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tbody><tr> <td> <table hasbackground=\"true\" class=\"devicewidth\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\"><tbody> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"30\" align=\"center\"> </td> </tr> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"1\" align=\"center\" bgcolor=\"#d1d1d1\" width=\"550\"> </td> </tr> <tr> <td style=\"font-size:1px; line-height:1px;\" height=\"30\" align=\"center\"> </td> </tr> </tbody></table> </td> </tr></tbody></table> </body> </html> ';\n\nvar res = {msg:msg.mensaje, payload:payload};\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2028.4386291503906,
+        "y": 574.88330078125,
+        "wires": [
+            [
+                "9a6b230e.9421f"
+            ]
+        ]
+    },
+    {
+        "id": "69559dd5.6eb17c",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "debug",
+        "active": false,
+        "console": "true",
+        "complete": "true",
+        "x": 2217.2169189453125,
+        "y": 454.772216796875,
+        "wires": []
+    },
+    {
+        "id": "456d8cb9.8350b4",
+        "type": "debug",
+        "z": "2667e117.0ef57e",
+        "name": "debug",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 2223.2034912109375,
+        "y": 648.7592163085938,
+        "wires": []
+    },
+    {
+        "id": "9236ab50.3310e8",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 1477.6480712890625,
+        "y": 532.6482543945312,
+        "wires": [
+            [
+                "caa50a7b.02d158"
+            ]
+        ]
+    },
+    {
+        "id": "caa50a7b.02d158",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "GeneraAlerta",
+        "func": "var results = msg.payload;\n\nvar id = msg.mensaje.from.id\nvar nombre = results[0].first_name;\nvar lat = results[0].lat;\nvar lon = results[0].lon;\nvar apellido = results[0].last_name;\nvar full_address = results[0].full_address;\nvar emer_phone = results[0].emer_phone;\n\nvar datos = {id: id, nombre: nombre, apellido: apellido, lat: lat, lon: lon, direccion: full_address, tel: emer_phone};\n\n\n\nvar query = \"INSERT INTO iap.alerts (phone, lat, lon, nombre, apellido, full_address, user_id)\"+ \n            \"VALUES(\"+emer_phone+\",'\"+lat+\"','\"+lon+\"','\"+nombre+\"','\"+apellido+\"','\"+full_address+\"','\"+id+\"');\";\n            \n            \nvar output = {mensaje:msg.mensaje, stage:msg.stage, topic: query, datos: datos };\nreturn output;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1664.3150634765625,
+        "y": 529.8703918457031,
+        "wires": [
+            [
+                "bf9b24a1.7b84a",
+                "ca6454fe.c123a",
+                "4d96dff3.07c7f8",
+                "b8e5a06b.5f282"
+            ]
+        ]
+    },
+    {
+        "id": "c0c96ad1.a4163",
+        "type": "function",
+        "z": "2667e117.0ef57e",
+        "name": "BuscaTel",
+        "func": "var id = msg.mensaje.from.id;\nvar query = \"SELECT emer_phone FROM iap.users WHERE id=\"+id;\nvar output = {mensaje:msg.mensaje, position: msg.position, location:msg.location, stage:msg.stage, topic: query};\nreturn output;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1350.6851196289062,
+        "y": 492.648193359375,
+        "wires": [
+            [
+                "bc2eb221.6a9898"
+            ]
+        ]
+    },
+    {
+        "id": "bc2eb221.6a9898",
+        "type": "mysql",
+        "z": "2667e117.0ef57e",
+        "mydb": "5013ee51.ef7ea8",
+        "name": "",
+        "x": 1477.3517456054688,
+        "y": 492.6481628417969,
+        "wires": [
+            [
+                "d9c8bade.ae5d88"
+            ]
+        ]
+    }
+]
