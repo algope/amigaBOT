@@ -24,6 +24,7 @@ amigaBOT
 ## How-to use this code
 * see [INSTRUCTIONS](https://github.com/algope/amigaBOT/blob/master/INSTRUCTIONS.md) file
 * demo [DEMO](http://amigabot.herokuapp.com/flow)
+
 ## Contact
 #### Developer/Company
 * Homepage: http://alejandrogonzalez.me
