@@ -139,15 +139,15 @@
         "property": "text",
         "rules": [
             {
-                "t": "eq",
+                "t": "cont",
                 "v": "/start"
             },
             {
-                "t": "eq",
+                "t": "cont",
                 "v": "/registro"
             },
             {
-                "t": "eq",
+                "t": "cont",
                 "v": "/emergencia"
             },
             {
