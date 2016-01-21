@@ -1,6 +1,6 @@
 amigaBOT
 ======
-**amigaBOT** es un BOT para Telegram desarrollado íntegramente en node-red y permite a lasvíctimas de violencia de género notificar de situaciones en las que se encuentren en peligro..
+**amigaBOT** es un BOT para Telegram desarrollado íntegramente en node-red que permite a las víctimas de violencia de género notificar de situaciones en las que se encuentren en peligro.
 
 ## Download
 * [Version 1.0](https://github.com/algope/amigaBOT)
@@ -23,7 +23,7 @@ amigaBOT
 
 ## How-to use this code
 * see [INSTRUCTIONS](https://github.com/algope/amigaBOT/blob/master/INSTRUCTIONS.md) file
-
+* demo [DEMO](http://amigabot.herokuapp.com/flow)
 ## Contact
 #### Developer/Company
 * Homepage: http://alejandrogonzalez.me
